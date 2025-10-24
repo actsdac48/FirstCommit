@@ -1,0 +1,14 @@
+# Use OpenJDK base image
+FROM openjdk:17-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy Java source file into container
+COPY JavaProg.java .
+
+# Compile Java program
+RUN javac JavaProg.java
+
+# Default command to run the program
+CMD ["java", "JavaProg"]
