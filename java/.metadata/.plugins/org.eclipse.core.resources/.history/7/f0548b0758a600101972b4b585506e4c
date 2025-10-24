@@ -1,0 +1,23 @@
+package otherOnPreDefinedFunctionalInterface;
+
+import java.util.function.Supplier;
+
+public class GenerateRandomNum {
+
+	public static void main(String[] args) {
+		
+		Supplier<Integer> rand = () ->
+		{
+			int num = (int) (Math.random()*1000);
+			
+			return num;
+		};
+		
+		System.out.println(rand);
+		
+		
+		
+
+	}
+
+}

@@ -1,0 +1,102 @@
+package generateotp;
+
+
+import java.util.LinkedList;
+
+
+public class Entry {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		LinkedList<Object> linkedList = new LinkedList<>();
+		
+		
+		Runnable GeneratorThread = () ->
+		{
+			for(int i = 0; i < 5; i++)
+			{
+			String sum = "";
+			int idx = 3;
+			while(idx > 0) {
+				sum += (int)(Math.random() * 9);
+				idx--;
+			}
+			
+			synchronized(linkedList) {
+				linkedList.add(sum);
+				System.out.println("OTP added is : " + linkedList.getLast());
+			}
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			}
+		};
+		
+		Thread obj = new Thread(GeneratorThread);
+		obj.start();
+		
+		
+		
+		Runnable ConsumerThread  = () -> {
+			
+			
+			while(!linkedList.isEmpty())
+			{
+				System.out.println("before read");
+				
+				synchronized (linkedList) {
+					
+					System.out.println(linkedList.getFirst());
+					linkedList.removeFirst();
+				}
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+			
+		};
+		
+		Thread consumer = new Thread(ConsumerThread);
+		consumer.start();
+		
+		
+		System.out.println("Main Ends");
+		
+	
+		
+		
+		
+		
+		
+//		for(int i = 0; i < 5; i++) {
+//			linkedList.add(GeneratorThread.get());
+//			System.out.print(linkedList.get(i) + "\t");
+//		}
+//		
+		
+//		System.out.println(linkedList);
+//		linkedList.remove();
+//		System.out.println(linkedList);
+		
+//		Thread writeThread = new Thread(GeneratorThread);
+//		writeThread.start();
+		
+//		Runnable ReaderThread = () ->
+//		{
+//			
+//		};
+//		Thread readerThread = new Thread(ReaderThread);
+//		readerThread.start();
+
+	}
+
+}

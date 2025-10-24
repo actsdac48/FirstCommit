@@ -1,0 +1,13 @@
+package otherOnPreDefinedFunctionalInterface;
+
+public class FindLargedIntArray {
+
+	public static void main(String[] args) {
+		
+		int [] array = {23,345,456,12,235,578,234,67};
+		
+		
+
+	}
+
+}

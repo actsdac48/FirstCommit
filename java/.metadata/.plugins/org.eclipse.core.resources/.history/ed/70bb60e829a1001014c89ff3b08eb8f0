@@ -1,0 +1,15 @@
+package org.cdac.utils;
+
+public class LinkedListEntry {
+
+	public static void main(String[] args) {
+		
+		LinkedList ob = new LinkedList();
+		
+		ob.add("Hello");
+		
+		
+
+	}
+
+}

@@ -1,0 +1,11 @@
+package otherOnPreDefinedFunctionalInterface;
+
+public class ReverseArray {
+	public static void main(String[] args) {
+
+		Integer [] array = {23, 345, 456, 12, 235, 578, 234, 67};
+		
+		
+
+	}
+}

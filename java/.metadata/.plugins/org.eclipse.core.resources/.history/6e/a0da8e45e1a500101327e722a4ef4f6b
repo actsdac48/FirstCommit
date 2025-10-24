@@ -1,0 +1,29 @@
+package generateOtp;
+
+import java.util.function.Supplier;
+
+public class OtpGenerator {
+
+	public static void main(String[] args) {
+
+//		Supplier <String> otpGenerator = () -> 
+//		{
+//			char [] vowels = {'A', 'E', 'I', 'O', 'U'};
+//			int randomVowel = (int) (Math.random() * 4);
+//			
+//			StringBuffer buffer = new StringBuffer(String.valueOf(vowels[randomVowel]));
+//			
+//			for(int i = 0; i < 5; i++)
+//				buffer.append((int) (Math.random() * 9));
+//				
+//			return buffer.toString();
+//		};
+//		
+//		for(int i = 0; i < 5; i++)
+//			System.out.println(otpGenerator.get());
+
+		int otp = (int) (Math.random()*90000);
+		System.out.println(otp);
+	}
+
+}

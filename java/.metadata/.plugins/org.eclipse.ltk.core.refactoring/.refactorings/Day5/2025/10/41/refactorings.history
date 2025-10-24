@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 4 elements to &apos;Assign9/src/employee&apos;&#x0D;&#x0A;- Original project: &apos;Day5&apos;&#x0D;&#x0A;- Destination element: &apos;Assign9/src/employee&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     SalesPerson.java&#x0D;&#x0A;     Engineer.java&#x0D;&#x0A;     Manager.java&#x0D;&#x0A;     Employee.java" description="Copy files" destination="=Assign9/src&lt;employee" element1="Employee/src/EmployeeInheritance/SalesPerson.java" element2="Employee/src/EmployeeInheritance/Engineer.java" element3="Employee/src/EmployeeInheritance/Manager.java" element4="Employee/src/EmployeeInheritance/Employee.java" files="4" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1759923432092" units="0" version="1.0"/>
+</session>

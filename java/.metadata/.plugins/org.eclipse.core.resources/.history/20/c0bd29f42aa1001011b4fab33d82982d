@@ -1,0 +1,20 @@
+package org.cdac.utils;
+
+public class LinkedListEntry {
+
+	public static void main(String[] args) {
+		
+		LinkedList ob = new LinkedList();
+		
+		ob.add("Hello");
+		
+		String data = (String) ob.getFirst();
+		
+		while(data != null) {
+			System.out.println(data);
+			String data = (String) ob.getNext();
+		}
+
+	}
+
+}

@@ -1,0 +1,101 @@
+package examque;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class InputHandler {
+
+//	public static void addNewTask() {
+//
+//	}
+	static Scanner sc = new Scanner(System.in);
+	public static void addNewTask(ArrayList<Task> taskArr) {
+
+		System.out.println("Enter employee name:");
+		String employeeName = sc.nextLine();
+		System.out.println("Enter task title:");
+		String taskTitle = sc.nextLine();
+
+		System.out.println("Enter task description:");
+		String taskDescription = sc.nextLine();
+
+		System.out.println("Enter task status (COMPLETED, IN_PROGRESS, PENDING):");
+		String statusInput = sc.nextLine().toUpperCase();
+
+		System.out.println("Enter assigned date (yyyy-mm-dd):");
+		String dateInput = sc.nextLine();
+		
+		
+		Tasks taskStatus = Tasks.valueOf(statusInput);
+		java.util.Date assignedDate = java.sql.Date.valueOf(dateInput);
+		Task newTask = new Task(employeeName, taskTitle, taskDescription, taskStatus, assignedDate);
+		taskArr.add(newTask);
+		
+	}
+
+	public static void displayTasksByEmployee(ArrayList<Task> taskArr) {
+		
+		System.out.println("Enter employee name to display tasks:");
+		String employeeName = sc.nextLine();
+		for (Task task : taskArr) {
+			if (task.getEmployeeName().equalsIgnoreCase(employeeName)) {
+				System.out.println(task);
+			}
+		}
+		
+		
+	}
+
+	public static void displayTasksByStatus(ArrayList<Task> taskArr) {
+		// TODO Auto-generated method stub
+		System.out.println("Enter task status to display tasks (COMPLETED, IN_PROGRESS, PENDING):");
+		String statusInput = sc.nextLine().toUpperCase();
+		Tasks taskStatus = Tasks.valueOf(statusInput);
+		for (Task task : taskArr) {
+			if (task.getTaskStatus() == taskStatus) {
+				System.out.println(task);
+			}
+		}
+		
+	}
+
+	public static void displayCompletedTaskCountPerEmployee(ArrayList<Task> taskArr) {
+		
+		java.util.Map<String, Integer> completedTaskCount = new java.util.HashMap<>();
+		for (Task task : taskArr) {
+			if (task.getTaskStatus() == Tasks.COMPLETED) {
+				completedTaskCount.put(task.getEmployeeName(),
+						completedTaskCount.getOrDefault(task.getEmployeeName(), 0) + 1);
+			}
+		}
+		for (java.util.Map.Entry<String, Integer> entry : completedTaskCount.entrySet()) {
+			System.out.println("Employee: " + entry.getKey() + ", Completed Tasks: " + entry.getValue());
+		}
+		
+	}
+
+	public static void listTasksSortedByAssignedDate(ArrayList<Task> taskArr) {
+
+		taskArr.sort((t1, t2) -> t1.getAssignedDate().compareTo(t2.getAssignedDate()));
+		for (Task task : taskArr) {
+			System.out.println(task);
+		}
+		
+	}
+
+	public static void saveTasksToFile(ArrayList<Task> taskArr) {
+
+        System.out.println("Enter filename to save tasks:");
+        String filename = sc.nextLine();
+		try (java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.FileWriter(filename))) {
+			for (Task task : taskArr) {
+				writer.write(task.toString());
+				writer.newLine();
+			}
+			System.out.println("Tasks saved to " + filename);
+		} catch (java.io.IOException e) {
+			System.out.println("An error occurred while saving tasks: " + e.getMessage());
+		}
+		
+	}
+}

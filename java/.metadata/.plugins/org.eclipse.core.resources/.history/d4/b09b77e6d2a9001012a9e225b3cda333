@@ -1,0 +1,52 @@
+package employeemanagement;
+
+import java.sql.Date;
+
+public class Employee {
+
+	protected int empId;
+	protected String name;
+	protected String dept;
+	protected Date joiningDate;
+	
+	
+	
+	public int getEmpId() {
+		return empId;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getDept() {
+		return dept;
+	}
+	
+	public Date getJoiningDate() {
+		return joiningDate;
+	}
+	
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setDept(String dept) {
+		this.dept = dept;
+	}
+	
+	public void setJoiningDate(Date joiningDate) {
+		this.joiningDate = joiningDate;
+	}
+	
+	
+	public void display() {
+		System.out.println("Employee ID : " + empId + "Name : " + name + " Department : " + dept + "Joining date : " + joiningDate);
+	}
+
+	
+}

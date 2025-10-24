@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class InputHandler {
+
+ //	public static void addNewTask(ArrayList<Task> taskArr) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+	
+	static Scanner sc = new Scanner(System.in);
+	
+	public static void addNewTask(ArrayList<Task> taskArr) {
+		System.out.println("Enter Employee Name:");
+		String employeeName = sc.nextLine();
+		System.out.println("Enter Task Title:");
+		String taskTitle = sc.nextLine();
+		System.out.println("Enter Task Description:");
+		String taskDescription = sc.nextLine();
+		System.out.println("Enter Task Status (COMPLETED, IN_PROGRESS, PENDING) : ");
+		String statusInput = sc.nextLine().toUpperCase();
+		Tasks taskStatus;
+	}
+
+	
+	
+}

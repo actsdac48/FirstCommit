@@ -1,0 +1,1043 @@
+
+
+Q 1. Create following tables and solve the  queries
+
+
+1. create table category(
+       cid int primary key,
+       cname varchar (15) unique not null,
+       description varchar (30)     
+     );
+
+
+mysql> select * from category;
++-----+-------------+-------------------------+
+| cid | cname       | description             |
++-----+-------------+-------------------------+
+|   1 | chips       | very crunchy            |
+|   2 | chocolate   | very chocolaty          |
+|   3 | snacks      | yummy                   |
+|   4 | cold drinks | thanda thanda cool cool |
++-----+-------------+-------------------------+
+4 rows in set (0.00 sec)
+
+
+
+
+2. create table Product(
+   pid  int primary key,
+   pname varchar (20),
+   price float (6,2) default 20.00,
+   qty int check(qty>0),
+   cid int  ,
+   sid int,
+   constraint fk_cid foreign key(cid) references category(cid),  
+   constraint fk_sid foreign key(sid) references salesman1(sid)  
+   );
+mysql> select * from Product;
++-----+-------------+--------+------+------+------+
+| pid | pname       | price  | qty  | cid  | sid  |
++-----+-------------+--------+------+------+------+
+| 111 | pepsi       |  50.00 |   40 |    4 |   11 |
+| 123 | lays        |  30.00 |   30 |    1 |   12 |
+| 124 | dairy milk  |  60.00 |   40 |    2 |   14 |
+| 125 | pringles    |  60.00 |   40 |    1 |   14 |
+| 134 | nachos      |  50.00 |   50 |    1 |   12 |
+| 167 | eraser      |   5.00 |   90 | NULL | NULL |
+| 213 | Sketch Pens | 150.00 |   56 | NULL |   11 |
++-----+-------------+--------+------+------+------+
+7 rows in set (0.00 sec)
+
+
+
+
+
+
+3. create table salesman
+(
+   sid int primary key,
+   sname varchar (15) unique not null,
+   city varchar (15)
+);
+
+
+mysql> select * from salesman1;
++-----+--------+----------+
+| sid | sname  | city     |
++-----+--------+----------+
+|  11 | Rahul  | Pune     |
+|  12 | Kirti  | Mumbai   |
+|  13 | Prasad | Nashik   |
+|  14 | Arnav  | Amravati |
++-----+--------+----------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q1.1. List all pid,pname,cid,cname  with category chips
+
+
+mysql> select p.pid, p.pname, c.cid, c.cname from product p, category c where p.cid in (select c.cid from category where c.cname = 'chips');
++-----+----------+-----+-------+
+| pid | pname    | cid | cname |
++-----+----------+-----+-------+
+| 123 | lays     |   1 | chips |
+| 125 | pringles |   1 | chips |
+| 134 | nachos   |   1 | chips |
++-----+----------+-----+-------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q1.2. Display all products sold by kirti
+
+
+mysql> select * from product p, salesman1 s  where p.sid in (select s.sid from salesman1 where s.sname='kirti');
++-----+--------+-------+------+------+------+-----+-------+--------+
+| pid | pname  | price | qty  | cid  | sid  | sid | sname | city   |
++-----+--------+-------+------+------+------+-----+-------+--------+
+| 123 | lays   | 30.00 |   30 |    1 |   12 |  12 | Kirti | Mumbai |
+| 134 | nachos | 50.00 |   50 |    1 |   12 |  12 | Kirti | Mumbai |
++-----+--------+-------+------+------+------+-----+-------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q1.3. Display all salesmen who did not sell any product
+
+
+mysql> select * from salesman1 where sid not in (select sid from Product where Product.sid = salesman1.sid);
++-----+--------+--------+
+| sid | sname  | city   |
++-----+--------+--------+
+|  13 | Prasad | Nashik |
++-----+--------+--------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q1.4. Display all category for which no product is assigned
+
+
+mysql> select * from category where cid not in (select cid from Product where Product.cid = category.cid);
++-----+--------+-------------+
+| cid | cname  | description |
++-----+--------+-------------+
+|   3 | snacks | yummy       |
++-----+--------+-------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q1.5. Display all products to which  category is  not assigned
+
+
+mysql> select * from Product where cid is null;
++-----+-------------+--------+------+------+------+
+| pid | pname       | price  | qty  | cid  | sid  |
++-----+-------------+--------+------+------+------+
+| 167 | eraser      |   5.00 |   90 | NULL | NULL |
+| 213 | Sketch Pens | 150.00 |   56 | NULL |   11 |
++-----+-------------+--------+------+------+------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q1.6. Display count of products to whom category is not assigned.
+
+
+mysql> select count(*) "count of product has no category" from Product where cid is null;
++----------------------------------+
+| count of product has no category |
++----------------------------------+
+|                                2 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q1.7. Write a query to list proid,pname,catid and price of all products whose price is more than the average price of the products in that category.
+
+
+mysql> select pid, pname, cid, price from Product where price >(select avg(price) from Product) and cid is not null;
++-----+------------+------+-------+
+| pid | pname      | cid  | price |
++-----+------------+------+-------+
+| 125 | pringles   |    1 | 60.00 |
+| 124 | dairy milk |    2 | 60.00 |
++-----+------------+------+-------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q1.8. List count of products sold by each salesman.
+
+
+
+mysql> select count(p.sid), p.sid from Product p, salesman1 s where s.sid=p.sid group by p.sid;
++--------------+------+
+| count(p.sid) | sid  |
++--------------+------+
+|            2 |   14 |
+|            2 |   12 |
+|            2 |   11 |
++--------------+------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+   
+   
+   
+   
+   
+   ------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q2.List all employees reporting to the mgr to whom Smith reports.
+
+
+mysql> select * from EMP where mgr in(select mgr from EMP where ename='smith');
++-------+-------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+-------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK | 7902 | 1980-12-17 |  800 | NULL |     20 |
++-------+-------+-------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q3.Try out on delete set null/cascade and on update set null/cascade done in calss.
+
+#ON DELETE SET NULL
+
+
+mysql> alter table dept1 add primary key(deptno);
+Query OK, 0 rows affected (1.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table emp1 add constraint fk_deptno foreign key(deptno) references dept1(deptno) on delete set null;
+Query OK, 14 rows affected (2.21 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+
+mysql> delete from dept1 where deptno=10;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |   NULL |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |   NULL |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |   NULL |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+
+
+#ON DELETE CASCADE
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |   NULL |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |   NULL |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |   NULL |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> select * from dept1;
++--------+------------+---------+
+| DEPTNO | DNAME      | LOC     |
++--------+------------+---------+
+|     20 | RESEARCH   | DALLAS  |
+|     30 | SALES      | CHICAGO |
+|     40 | OPERATIONS | BOSTON  |
++--------+------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> delete from dept1 where deptno=30;
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from dept1;
++--------+------------+--------+
+| DEPTNO | DNAME      | LOC    |
++--------+------------+--------+
+|     20 | RESEARCH   | DALLAS |
+|     40 | OPERATIONS | BOSTON |
++--------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |   NULL |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |   NULL |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |   NULL |
++-------+--------+-----------+------+------------+------+------+--------+
+8 rows in set (0.00 sec)
+
+
+
+#ON DELETE SET NULL
+
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     40 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     40 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     40 |
++-------+--------+-----------+------+------------+------+------+--------+
+8 rows in set (0.00 sec)
+
+
+mysql> select * from dept1;
++--------+------------+--------+
+| DEPTNO | DNAME      | LOC    |
++--------+------------+--------+
+|     20 | RESEARCH   | DALLAS |
+|     40 | OPERATIONS | BOSTON |
++--------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> update dept1 set deptno=10 where deptno=40;
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from dept1;
++--------+------------+--------+
+| DEPTNO | DNAME      | LOC    |
++--------+------------+--------+
+|     10 | OPERATIONS | BOSTON |
+|     20 | RESEARCH   | DALLAS |
++--------+------------+--------+
+2 rows in set (0.00 sec)
+
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |   NULL |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |   NULL |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |   NULL |
++-------+--------+-----------+------+------------+------+------+--------+
+8 rows in set (0.00 sec)
+
+
+
+#ON UPDATE CASCADE
+
+mysql> alter table emp1 add constraint fk_deptno foreign key(deptno) references dept1(deptno) on update cascade;
+Query OK, 8 rows affected (1.62 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> update dept1 set deptno=40 where deptno=20;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from dept1;
++--------+------------+--------+
+| DEPTNO | DNAME      | LOC    |
++--------+------------+--------+
+|     10 | OPERATIONS | BOSTON |
+|     40 | RESEARCH   | DALLAS |
++--------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp1;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     40 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     40 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |   NULL |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     40 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |   NULL |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     40 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     40 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |   NULL |
++-------+--------+-----------+------+------------+------+------+--------+
+8 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q4.Practice not in /in  sub queries done in class demao.
+Add new row in emp having deptno 80 and another row with deptno null.
+
+
+
+#IN
+
+
+
+mysql> select ename,deptno from EMP where deptno in (select deptno from DEPT);
++--------+--------+
+| ename  | deptno |
++--------+--------+
+| SMITH  |     20 |
+| ALLEN  |     30 |
+| WARD   |     30 |
+| JONES  |     20 |
+| MARTIN |     30 |
+| BLAKE  |     30 |
+| CLARK  |     10 |
+| SCOTT  |     20 |
+| KING   |     10 |
+| TURNER |     30 |
+| ADAMS  |     20 |
+| JAMES  |     30 |
+| FORD   |     20 |
+| MILLER |     10 |
++--------+--------+
+14 rows in set (0.00 sec)
+
+
+#NOT IN
+
+mysql> select ename,deptno from EMP where deptno not in (select deptno from DEPT);
++-------+--------+
+| ename | deptno |
++-------+--------+
+| NULL  |     80 |
++-------+--------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+           		 # Extra assignments on Date and Time Functions  #
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q1. Write a query to display the first day of the month (in datetime format) three months before the current month.
+ Sample current date : 2014-09-03
+ Expected result : 2014-06-03
+
+  
+mysql> select date_add('2014-09-03', interval -3 month);
++-------------------------------------------+
+| date_add('2014-09-03', interval -3 month) |
++-------------------------------------------+
+| 2014-06-03                                |
++-------------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q2. Write a query to display the last day of the month (in datetime format) three months before the current month.
+
+
+mysql> select last_day(date_add(curdate(), interval -3 month));
++--------------------------------------------------+
+| last_day(date_add(curdate(), interval -3 month)) |
++--------------------------------------------------+
+| 2025-06-30                                       |
++--------------------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q3. Write a query to get the distinct Mondays from hiredate in emp tables.
+
+
+mysql> select * from EMP where dayname(hiredate)='monday';
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
++-------+--------+----------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q4. Write a query to get the first day of the current year.
+
+
+mysql> select dayname(date_format(curdate(),'%y-01-01'));
++--------------------------------------------+
+| dayname(date_format(curdate(),'%y-01-01')) |
++--------------------------------------------+
+| Wednesday                                  |
++--------------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+mysql> SELECT dayname(MAKEDATE(YEAR(CURDATE()), 1));
++---------------------------------------+
+| dayname(MAKEDATE(YEAR(CURDATE()), 1)) |
++---------------------------------------+
+| Wednesday                             |
++---------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q5. Write a query to get the last day of the current year.
+
+
+mysql> select dayname(date_format(curdate(),'%y-12-31'));
++--------------------------------------------+
+| dayname(date_format(curdate(),'%y-12-31')) |
++--------------------------------------------+
+| Wednesday                                  |
++--------------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q6. Write a query to calculate your age in year.
+
+
+mysql> select floor(datediff(curdate(), '2002-01-29')/365);
++----------------------------------------------+
+| floor(datediff(curdate(), '2002-01-29')/365) |
++----------------------------------------------+
+|                                           23 |
++----------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select floor(datediff(curdate(), '2003-03-08')/365);
++----------------------------------------------+
+| floor(datediff(curdate(), '2003-03-08')/365) |
++----------------------------------------------+
+|                                           22 |
++----------------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+ 
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q7. Write a query to get the current date in the following format.
+Sample date : 04-sep-2014
+Output : September 4, 2014     
+
+
+mysql> select date_format(curdate(), '%M %d, %Y');
++-------------------------------------+
+| date_format(curdate(), '%M %d, %Y') |
++-------------------------------------+
+| September 18, 2025                  |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q8. Write a query to get the current date in Thursday September 2014 format.
+Thursday September 2014
+
+
+mysql> select concat(dayname(curdate()),' ',date_format(curdate(), '%M %Y')) 'current date';
++-------------------------+
+| current date            |
++-------------------------+
+| Thursday September 2025 |
++-------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q9. Write a query to extract the year from the current date.
+
+
+mysql> select year(curdate());
++-----------------+
+| year(curdate()) |
++-----------------+
+|            2025 |
++-----------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q10. Write a query to get the first name and hire date from employees table where hire date between '1987-06-01' and '1987-07-30'
+
+
+mysql> select * from EMP;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
+|  3746 | NULL   | NULL      | NULL | NULL       | NULL | NULL |     80 |
+|  7864 | NULL   | NULL      | NULL | NULL       | NULL | NULL |   NULL |
++-------+--------+-----------+------+------------+------+------+--------+
+16 rows in set (0.00 sec)
+
+mysql> select ename, hiredate from EMP where hiredate between '1987-06-01' and '1987-07-30';
+Empty set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q11. Write a query to display the current date in the following format.
+Sample output: Thursday 4th September 2014 00:00:00
+
+
+mysql> select concat(dayname(curdate()),' ',date_format(curdate(), '%D %M %Y '), curtime()) 'current
+date';
++---------------------------------------+
+| current date                          |
++---------------------------------------+
+| Thursday 18th September 2025 17:04:16 |
++---------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q12. Write a query to display the current date in the following format.
+Sample output: 05/09/2014
+
+
+mysql> select date_format(curdate(), '%d/%m/%Y') 'current date';
++--------------+
+| current date |
++--------------+
+| 18/09/2025   |
++--------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q13. Write a query to display the current date in the following format.
+Sample output: 12:00 AM Sep 5, 2014
+
+
+mysql> select concat(time_format(curtime(), '%h:%i %p '), date_format(curdate(), '%M %d, %Y'));
++-----------------------------+
+| current date time           |
++-----------------------------+
+| 05:15 PM September 18, 2025 |
++-----------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q14. Write a query to get the employees who joined in the month of June.
+
+
+mysql> select * from EMP where hiredate= date_format(hiredate, '%Y-06-%d');
++-------+-------+---------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+---------+------+------------+------+------+--------+
+|  7782 | CLARK | MANAGER | 7839 | 1981-06-09 | 2450 | NULL |     10 |
++-------+-------+---------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q15. Write a query to get the years in which more than 4 employees joined.
+
+
+mysql> select year(hiredate) from EMP group by year(hiredate) having count(year(hiredate))>4;
++----------------+
+| year(hiredate) |
++----------------+
+|           1981 |
++----------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q16. Write a query to get first name of employees who joined in 1983.    
+
+
+mysql> select ename from EMP where year(hiredate)=1983;
++-------+
+| ename |
++-------+
+| ADAMS |
++-------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q17. Write a query to get employees whose experience is more than 5 years.
+
+
+mysql> select * from EMP where datediff(curdate(), hiredate)>5;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q18. Write a query to get employee ID, name, and date of first salary of the employees. Consider that first salary date is one month after employee joining.
+
+
+mysql> SELECT empno, ename, date_add(hiredate, interval 1 month) "first salary date" from EMP;
++-------+--------+-------------------+
+| empno | ename  | first salary date |
++-------+--------+-------------------+
+|  7369 | SMITH  | 1981-01-17        |
+|  7499 | ALLEN  | 1981-03-20        |
+|  7521 | WARD   | 1981-03-22        |
+|  7566 | JONES  | 1981-05-02        |
+|  7654 | MARTIN | 1981-10-28        |
+|  7698 | BLAKE  | 1981-06-01        |
+|  7782 | CLARK  | 1981-07-09        |
+|  7788 | SCOTT  | 1983-01-09        |
+|  7839 | KING   | 1981-12-17        |
+|  7844 | TURNER | 1981-10-08        |
+|  7876 | ADAMS  | 1983-02-12        |
+|  7900 | JAMES  | 1982-01-03        |
+|  7902 | FORD   | 1982-01-03        |
+|  7934 | MILLER | 1982-02-23        |
+|  3746 | NULL   | NULL              |
+|  7864 | NULL   | NULL              |
++-------+--------+-------------------+
+16 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q19. Write a query to get first name, hire date and experience of the employees.
+
+
+mysql> select ename, hiredate, floor(datediff(curdate(), hiredate)/365) 'experience' from EMP;
++--------+------------+------------+
+| ename  | hiredate   | experience |
++--------+------------+------------+
+| SMITH  | 1980-12-17 |         44 |
+| ALLEN  | 1981-02-20 |         44 |
+| WARD   | 1981-02-22 |         44 |
+| JONES  | 1981-04-02 |         44 |
+| MARTIN | 1981-09-28 |         44 |
+| BLAKE  | 1981-05-01 |         44 |
+| CLARK  | 1981-06-09 |         44 |
+| SCOTT  | 1982-12-09 |         42 |
+| KING   | 1981-11-17 |         43 |
+| TURNER | 1981-09-08 |         44 |
+| ADAMS  | 1983-01-12 |         42 |
+| JAMES  | 1981-12-03 |         43 |
+| FORD   | 1981-12-03 |         43 |
+| MILLER | 1982-01-23 |         43 |
+| NULL   | NULL       |       NULL |
+| NULL   | NULL       |       NULL |
++--------+------------+------------+
+16 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q20. Write a query to get the  display year , and number of employees joined in 1981.
+
+
+mysql> select year(hiredate), count(*) from EMP where year(hiredate)=1981 group by year(hiredate);
++----------------+----------+
+| year(hiredate) | count(*) |
++----------------+----------+
+|           1981 |       10 |
++----------------+----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

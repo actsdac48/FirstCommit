@@ -1,0 +1,59 @@
+package examque;
+
+import java.util.Date;
+
+public class Task {
+	
+	private static int idCounter = 1;
+	private int taskId;
+	private String employeeName;
+	private String taskTitle;
+	private String taskDescription;
+	private Tasks taskStatus;
+	private Date assignedDate;
+
+//	public enum TaskStatus {
+//		COMPLETED, IN_PROGRESS, PENDING
+//	}
+
+	public Task(String employeeName, String taskTitle, String taskDescription, Tasks taskStatus, Date assignedDate) {
+		this.taskId = idCounter++;
+		this.employeeName = employeeName;
+		this.taskTitle = taskTitle;
+		this.taskDescription = taskDescription;
+		this.taskStatus = taskStatus;
+		this.assignedDate = assignedDate;
+	}
+
+	public int getTaskId() {
+		return taskId;
+	}
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public String getTaskTitle() {
+		return taskTitle;
+	}
+
+	public String getTaskDescription() {
+		return taskDescription;
+	}
+
+	public Tasks getTaskStatus() {
+		return taskStatus;
+	}
+
+	public Date getAssignedDate() {
+		return assignedDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Task ID: " + taskId + ", Employee Name: " + employeeName + ", Task Title: " + taskTitle
+				+ ", Task Description: " + taskDescription + ", Task Status: " + taskStatus + ", Assigned Date: "
+				+ assignedDate;
+	}
+	
+}

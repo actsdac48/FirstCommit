@@ -1,0 +1,39 @@
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+public class Employee implements Serializable {
+	private int employeeId;
+	private String empName;
+	private Dept dept;
+	private LocalDate joiningDate;
+
+	public Employee(int employeeId, String empName, Dept dept, LocalDate joiningDate) {
+		this.employeeId = employeeId;
+		this.empName = empName;
+		this.dept = dept;
+		this.joiningDate = joiningDate;
+	}
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public Dept getDept() {
+		return dept;
+	}
+
+	public LocalDate getJoiningDate() {
+		return joiningDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee{" + "employeeId=" + employeeId + ", empName='" + empName + '\'' + ", dept=" + dept
+				+ ", joiningDate=" + joiningDate + '}';
+	}
+}

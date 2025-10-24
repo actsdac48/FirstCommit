@@ -1,0 +1,41 @@
+package ThreadwithGUI;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class BounceRect implements Runnable {
+
+	MainFrame frm;
+	public BounceRect(MainFrame frm) {
+		super();
+		this.frm = frm;
+	}
+	
+	@Override
+	public void run() {
+		int xPos = 10;
+		int yPos = 60;
+		Graphics grp = frm.getGraphics();
+		try {
+			while(frm.runningStatus) {
+				grp.setColor(Color.white);
+				grp.drawRect(xPos, yPos, 60, 20);
+				yPos += 2;
+				
+				if(yPos >= 300) {
+					break;
+				}
+				
+				grp.setColor(Color.black);
+				
+				grp.drawRect(xPos, yPos, 60, 20);
+				Thread.sleep(30);				
+			}
+		}catch(InterruptedException e) {
+			e.printStackTrace();	
+		}
+		System.out.println("Rectangle Thread Terminated--");
+
+	}
+
+}

@@ -1,0 +1,5 @@
+package otherOnPreDefinedFunctionalInterface;
+
+public interface intPredicate<I, O> {
+	I test(O value); 
+}

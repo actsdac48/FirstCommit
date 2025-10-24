@@ -1,0 +1,81 @@
+package reflectionexample;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import java.util.Scanner;
+
+public class Entry {
+
+	public static void main(String[] args) {
+	
+		
+		Class refClass = null;
+		
+		try {
+			refClass = Class.forName("java.lang.reflect.Constructor");
+			Constructor [] annot = refClass.getConstructors();			
+			for(Constructor data : annot)
+				System.out.println(data.getName());
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		Method[] arrMethods = refClass.getMethods();
+		Field[] arrField = refClass.getFields();
+		
+		for(Method ob : arrMethods) {
+			System.out.println(ob.getName());
+			System.out.println(ob.getReturnType());
+			System.out.println(ob.getModifiers());
+			System.out.println(ob.getParameterCount());
+			System.out.println("----------------------");
+		}
+		System.out.println("=======================");
+		for(Method ob : arrMethods) {
+			System.out.println(ob.getName());
+			System.out.println(ob.getReturnType());
+			System.out.println(ob.getModifiers());
+			System.out.println(ob.getParameterCount());
+			System.out.println("----------------------");
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		try (Scanner sc = new Scanner(System.in)){
+//			System.out.println("Enter Classs name : ");
+//			String className = sc.nextLine();
+//			
+//			Class<?> fetchclass = Class.forName("NewDemo");
+//			
+//			Annotation[] annot = fetchclass.getAnnotations();
+//			
+//			for(Annotation ob : annot)
+//				System.out.println(ob.toString());
+//			System.out.println("exit");
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
+		
+		
+
+	}
+
+}

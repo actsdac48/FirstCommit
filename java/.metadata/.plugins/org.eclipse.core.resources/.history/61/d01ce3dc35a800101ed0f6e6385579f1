@@ -1,0 +1,17 @@
+package classcode;
+
+public class Increament extends Thread {
+
+	public void run() {
+		for(int i = 0; i < 1000000; i++) {
+			//try {
+				System.out.println("Run in Increment----------");
+			
+				//Thread.sleep(100);
+			//} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			//}
+		}
+	}
+}

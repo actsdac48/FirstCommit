@@ -1,0 +1,12 @@
+package otherOnPreDefinedFunctionalInterface;
+
+public class GenerateRandomNum {
+
+	public static void main(String[] args) {
+		
+		int num = (int) Math.random();
+		System.out.println(num);
+
+	}
+
+}

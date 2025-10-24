@@ -1,0 +1,86 @@
+package taskmanagement;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Task implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    private static int idCounter = 1;
+    
+    private int taskId;
+    private String employeeName;
+    private String taskTitle;
+    private String taskDescription;
+    private TaskStatus taskStatus;
+    private Date assignedDate;
+    
+    public Task() {
+        
+    }
+    
+    public Task(String employeeName, String taskTitle, String taskDescription, TaskStatus taskStatus, Date assignedDate) {
+        this.taskId = idCounter++;
+        this.employeeName = employeeName;
+        this.taskTitle = taskTitle;
+        this.taskDescription = taskDescription;
+        this.taskStatus = taskStatus;
+        this.assignedDate = assignedDate;
+    }
+    
+    // Getters
+    public int getTaskId() {
+        return taskId;
+    }
+    
+    public String getEmployeeName() {
+        return employeeName;
+    }
+    
+    public String getTaskTitle() {
+        return taskTitle;
+    }
+    
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+    
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+    
+    public Date getAssignedDate() {
+        return assignedDate;
+    }
+    
+    // Setters
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+    
+    public void setTaskTitle(String taskTitle) {
+        this.taskTitle = taskTitle;
+    }
+    
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+    
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+    
+    public void setAssignedDate(Date assignedDate) {
+        this.assignedDate = assignedDate;
+    }
+    
+    @Override
+    public String toString() {
+        return "Task ID: " + taskId + 
+               ", Employee: " + employeeName + 
+               ", Title: " + taskTitle + 
+               ", Description: " + taskDescription + 
+               ", Status: " + taskStatus + 
+               ", Assigned Date: " + assignedDate;
+    }
+}

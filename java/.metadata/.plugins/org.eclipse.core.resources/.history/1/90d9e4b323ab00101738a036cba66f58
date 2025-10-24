@@ -1,0 +1,243 @@
+package exam;
+
+import java.io.*;
+import java.util.*;
+import java.text.SimpleDateFormat;
+
+public class Entry {
+    
+    private static ArrayList<Task> taskList = new ArrayList<>();
+    private static final String FILE_NAME = "tasks.txt";
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+    	
+    	//ArrayList<Task> taskList = new ArrayList<>();
+        
+        //loadTasksFromFile();
+        
+        int choice;
+        do {
+            System.out.println("\n****************** Task Management System ********************");
+            System.out.println("1. Add a new task record\n2. Display all tasks assigned to a specific employee\n3. Display tasks by status\n4. Display count of completed tasks per employee\n5. List all tasks sorted by assigned date\n6. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            
+            switch(choice) {
+                case 1: {
+                    addNewTask();
+                } break;
+                
+                case 2: {
+                    displayTasksByEmployee();
+                } break;
+                
+                case 3: {
+                    displayTasksByStatus();
+                } break;
+                
+                case 4: {
+                    displayCompletedTasksCount();
+                } break;
+                
+                case 5: {
+                    displayTasksSortedByDate();
+                } break;
+                
+                case 6: {
+                    saveTasksToFile();
+                    System.out.println("Exiting.............................. Goodbye!!!!!!!!!!!!!!!!!!!!");
+                } break;
+                
+                default: {
+                    System.out.println("Invalid choice! Please try again.");
+                }
+            }
+            
+        } while(choice != 6);
+        
+        scanner.close();
+    }
+    
+    //add new task
+    public static void addNewTask() {
+        try {
+            System.out.print("Enter employee name: ");
+            String employeeName = scanner.nextLine();
+            
+            System.out.print("Enter task title: ");
+            String taskTitle = scanner.nextLine();
+            
+            System.out.print("Enter task description: ");
+            String taskDescription = scanner.nextLine();
+            
+            //EmptyFieldException to throw
+            if(employeeName.isEmpty() || taskTitle.isEmpty() || taskDescription.isEmpty()) {
+                throw new EmptyFieldException("Employee name, task title and description cannot be empty!");
+            }
+            
+            // DuplicateTaskException to throw
+            for(Task task : taskList) {
+                if(task.getEmployeeName().equalsIgnoreCase(employeeName) && 
+                   task.getTaskTitle().equalsIgnoreCase(taskTitle)) {
+                    throw new DuplicateTaskException("Task with same title already exists for this employee!");
+                }
+            }
+            
+            //getting appropriate task status
+            System.out.println("Select task status: ");
+            System.out.println("1. COMPLETED");
+            System.out.println("2. IN_PROGRESS");
+            System.out.println("3. PENDING");
+            System.out.print("Enter choice: ");
+            int statusChoice = scanner.nextInt();
+            scanner.nextLine();
+            
+            TaskStatus status;
+            switch(statusChoice) {
+                case 1: status = TaskStatus.COMPLETED; break;
+                case 2: status = TaskStatus.IN_PROGRESS; break;
+                case 3: status = TaskStatus.PENDING; break;
+                default: 
+                    System.out.println("Invalid choice! Setting to PENDING.");
+                    status = TaskStatus.PENDING;
+            }
+            
+            Task newTask = new Task(employeeName, taskTitle, taskDescription, status, new Date());
+            taskList.add(newTask);
+            saveTasksToFile();
+            
+            System.out.println("Task added successfully! Task ID: " + newTask.getTaskId());
+            
+        } catch (EmptyFieldException | DuplicateTaskException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    
+    // Method to display tasks by employee
+    public static void displayTasksByEmployee() {
+        System.out.print("Enter employee name: ");
+        String employeeName = scanner.nextLine();
+        
+        boolean found = false;
+        for(Task task : taskList) {
+            if(task.getEmployeeName().equalsIgnoreCase(employeeName)) {
+                System.out.println(task);
+                found = true;
+            }
+        }
+        
+        if(!found) {
+            System.out.println("No tasks found for employee: " + employeeName);
+        }
+    }
+    
+    // Method to display tasks by status
+    public static void displayTasksByStatus() {
+        System.out.println("Select status to display:");
+        System.out.println("1. COMPLETED");
+        System.out.println("2. IN_PROGRESS");
+        System.out.println("3. PENDING");
+        System.out.print("Enter choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        
+        TaskStatus status;
+        switch(choice) {
+            case 1: status = TaskStatus.COMPLETED; break;
+            case 2: status = TaskStatus.IN_PROGRESS; break;
+            case 3: status = TaskStatus.PENDING; break;
+            default: 
+                System.out.println("Invalid choice!");
+                return;
+        }
+        
+        boolean found = false;
+        for(Task task : taskList) {
+            if(task.getTaskStatus() == status) {
+                System.out.println(task);
+                found = true;
+            }
+        }
+        
+        if(!found) {
+            System.out.println("No tasks found with status: " + status);
+        }
+    }
+    
+    // Method to display completed tasks count per employee
+    public static void displayCompletedTasksCount() {
+        HashMap<String, Integer> completedCount = new HashMap<>();
+        
+        for(Task task : taskList) {
+            if(task.getTaskStatus() == TaskStatus.COMPLETED) {
+                String employee = task.getEmployeeName();
+                completedCount.put(employee, completedCount.getOrDefault(employee, 0) + 1);
+            }
+        }
+        
+        if(completedCount.isEmpty()) {
+            System.out.println("No completed tasks found.");
+        } else {
+            System.out.println("Completed tasks count per employee:");
+            for(Map.Entry<String, Integer> entry : completedCount.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue() + " tasks");
+            }
+        }
+    }
+    
+    // Method to display tasks sorted by assigned date
+    public static void displayTasksSortedByDate() {
+        if(taskList.isEmpty()) {
+            System.out.println("No tasks available.");
+            return;
+        }
+        
+        // Create a copy and sort by date
+        ArrayList<Task> sortedList = new ArrayList<>(taskList);
+        for(int i = 0; i < sortedList.size() - 1; i++) {
+            for(int j = i + 1; j < sortedList.size(); j++) {
+                if(sortedList.get(i).getAssignedDate().compareTo(sortedList.get(j).getAssignedDate()) > 0) {
+                    Task temp = sortedList.get(i);
+                    sortedList.set(i, sortedList.get(j));
+                    sortedList.set(j, temp);
+                }
+            }
+        }
+        
+        System.out.println("Tasks sorted by assigned date:");
+        for(Task task : sortedList) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String formattedDate = dateFormat.format(task.getAssignedDate());
+            System.out.println(task.getTaskId() + " - " + task.getEmployeeName() + 
+                             " - " + task.getTaskTitle() + " - " + formattedDate);
+        }
+    }
+    
+    // Method to save tasks to file
+    public static void saveTasksToFile() {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
+            outputStream.writeObject(taskList);
+            outputStream.close();
+        } catch (IOException e) {
+            System.out.println("Error saving tasks to file: " + e.getMessage());
+        }
+    }
+    
+    // Method to load tasks from file
+    
+//    public static void loadTasksFromFile() {
+//        try {
+//            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_NAME));
+//            taskList = (ArrayList<Task>) inputStream.readObject();
+//            inputStream.close();
+//            System.out.println("Tasks loaded successfully from file.");
+//        } catch (FileNotFoundException e) {
+//            System.out.println("No existing task file found. Starting with empty task list.");
+//        } catch (IOException | ClassNotFoundException e) {
+//            System.out.println("Error loading tasks from file: " + e.getMessage());
+//        }
+//    }
+}

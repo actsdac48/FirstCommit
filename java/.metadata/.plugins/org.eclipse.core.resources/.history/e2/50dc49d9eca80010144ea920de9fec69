@@ -1,0 +1,28 @@
+package ThreadwithGUI;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class BounceRect implements Runnable {
+
+	MainFrame frm;
+	public BounceRect(MainFrame frm) {
+		super();
+		this.frm = frm;
+	}
+	
+	@Override
+	public void run() {
+		int xPos = 10;
+		int yPos = 60;
+		Graphics grp = frm.getGraphics();
+		try {
+			while(frm.runningStatus) {
+				grp.setColor(Color.white);
+				
+			}
+		}
+
+	}
+
+}

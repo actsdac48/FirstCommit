@@ -1,0 +1,902 @@
+1. Decrease price of all movies by Rs. 40.
+
+
+movies_db> db.movies.updateMany({},[{$set:{price:{$add:[{ $ifNull: ["$price", 0]},-40]}}}]);
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 18,
+  modifiedCount: 18,
+  upsertedCount: 0
+}
+
+
+movies_db> db.movies.find({},{})
+[
+  {
+    _id: ObjectId('5aaa31a2639395f86922a87e'),
+    name: 'kahani',
+    actor: [ 'aaaa', 'bbbb', 'karan', 'karri', 'vidya' ],
+    ticket_no: 420,
+    price: 80,
+    ac7tors: [ 'bbbb' ],
+    rating: 7,
+    lastmodified: { '$date': '2019-04-07T11:25:40.634Z' }
+  },
+  {
+    _id: ObjectId('5aaa31ee639395f86922a87f'),
+    name: '3 idiots',
+    actor: [ 'Kareena Kapoor', 'amir', 'kareena', 'mahadavan', 'sharman' ],
+    rating: 3,
+    ticket_no: 150,
+    price: -80
+  },
+  {
+    _id: ObjectId('5aaa3334639395f86922a880'),
+    name: 'lagaan',
+    actor: [ 'amir', 'angraz' ],
+    rating: 6,
+    ticket_no: 410,
+    price: 70,
+    cancellation: {
+      date: { '$timestamp': { t: 1554356003, i: 1 } },
+      reason: 'user request'
+    },
+    lastModified: { '$date': '2019-04-04T05:33:23.022Z' }
+  },
+  {
+    _id: ObjectId('5aaa3334639395f86922a881'),
+    name: 'sholay',
+    actor: [
+      'Dharamendra',
+      'Amitabh',
+      'Sachin Pilgaokar',
+      'Dharamendra',
+      'Dharamendra',
+      'Mr. Khote',
+      'jaya bacchan',
+      'sanjiv kapoor'
+    ],
+    rating: 6,
+    ticket_no: 550,
+    price: 70,
+    position: [ 2, 2 ]
+  },
+  {
+    _id: ObjectId('5aaa3334639395f86922a882'),
+    name: 'aradhana',
+    actor: [ 'amitabh', 'prem', 'rajesh khanna' ],
+    rating: 3,
+    ticket_no: 550,
+    price: -19.9
+  },
+  {
+    _id: ObjectId('5aab6da4639395f86922a883'),
+    name: 'kahani 2',
+    ticket_no: 820,
+    actor: [
+      'vidya',  'Arjun',
+      'Jonny',  'nawaz',
+      'prasad', 'Shreyas',
+      'Jonny',  'yash'
+    ],
+    rating: 7,
+    price: 120
+  },
+  {
+    _id: ObjectId('5bf6a36f57b2d4cc676c7a95'),
+    name: 'Andhadhund',
+    price: 120,
+    actor: [ 'Ayushman', 'radhika' ],
+    rating: 4
+  },
+  {
+    _id: ObjectId('5bf6a38c57b2d4cc676c7a96'),
+    name: 'Andhadhund',
+    price: -80,
+    actor: [ 'Tabbu' ],
+    rating: 4
+  },
+  {
+    _id: ObjectId('5c8283789eb55675f0272933'),
+    name: 'uri',
+    rating: 5,
+    actor: [ 'vicky kaushal', 'yami', 'Paresh Rawal' ],
+    price: -80
+  },
+  {
+    _id: ObjectId('5c865923d82c19b8ed996550'),
+    name: 'Dil dhadakane do',
+    rating: 3,
+    price: 260,
+    actor: "['Anil kapoor']"
+  },
+  {
+    _id: ObjectId('5ca453ef2952ebdd7ae2a92f'),
+    name: 'Kesari',
+    actor: [ 'Akshay Kumar', 'Pariniti chopra' ],
+    rating: 6,
+    price: 270,
+    ticket_no: 270,
+    rdate: { '$date': '2019-01-23T00:00:00.000Z' }
+  },
+  {
+    _id: ObjectId('5ca456072952ebdd7ae2a930'),
+    name: 'paa',
+    actor: [ 'Amitabh', 'vidya balan', 'Abhishek' ],
+    rating: 2,
+    price: 190,
+    ticket_no: 210,
+    rdate: { '$date': '2019-01-23T00:00:00.000Z' },
+    others: { director: 'R Balki', songs: 'Amit trivedi' }
+  },
+  {
+    _id: ObjectId('5ca47e5b2952ebdd7ae2a931'),
+    name: 'padmavat',
+    rating: 4,
+    price: 170,
+    ticket_no: 300,
+    actor: [
+      'Deepika',
+      'shahid kapoor',
+      'ranveer singh',
+      'aditi Rao',
+      'aaaaa'
+    ],
+    cancellation: { date: { '$timestamp': { t: 1567175239, i: 1 } } }
+  },
+  {
+    _id: ObjectId('5ca47ef82952ebdd7ae2a932'),
+    name: 'newton',
+    ticket_no: 690,
+    actor: [ 'Rajkumar Rao', 'Pankaj Tripathi' ],
+    price: 230,
+    lastmodified: { '$date': '2019-09-28T14:47:49.204Z' }
+  },
+  {
+    _id: ObjectId('5d6935a3470e2bef2a82cdfa'),
+    name: 'mission mangal',
+    price: 270,
+    actor: [ 'Sonakshi', 'Vidya Balan' ],
+    rating: 6
+  },
+  {
+    _id: ObjectId('5d89e9adfd4adc2f84279f43'),
+    name: 'chichore',
+    price: 194,
+    rating: 4.3,
+    actor: [ 'sushant', 'shradha kapoor', 'zzz', 'harshal' ]
+  },
+  {
+    _id: ObjectId('5d8f51ce065d3e2aa902aa22'),
+    name: 'dream girl',
+    actor: [ 'ayushman', 'nushrat bharucha' ],
+    price: 170,
+    rating: null
+  },
+  { _id: ObjectId('5d8f6eec620d2353221b91dd'), price: 200 }
+]
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+2. Increase the price by 10% of price to display all movies with amitabh acted in it and is at 1 st index position in array
+solution
+
+
+movies_db> db.movies.updateOne({actor:'amitabh'},{$inc:{price:0.1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+movies_db> db.movies.find({actor:'amitabh'})
+[
+  {
+    _id: ObjectId('5aaa3334639395f86922a882'),
+    name: 'aradhana',
+    actor: [ 'amitabh', 'prem', 'rajesh khanna' ],
+    rating: 3,
+    ticket_no: 550,
+    price: 60.1
+  }
+]
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+3. find all movies which start with digit
+
+
+movies_db> db.movies.find({'name':/^\d/});
+[
+  {
+    _id: ObjectId('5aaa31ee639395f86922a87f'),
+    name: '3 idiots',
+    actor: [ 'Kareena Kapoor', 'amir', 'kareena', 'mahadavan', 'sharman' ],
+    rating: 3,
+    ticket_no: 150,
+    price: -80
+  }
+]
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+4. find all movies whose name start with digit and ends with s
+
+
+movies_db> db.movies.find({'name':/^\d.*s$/});
+[
+  {
+    _id: ObjectId('5aaa31ee639395f86922a87f'),
+    name: '3 idiots',
+    actor: [ 'Kareena Kapoor', 'amir', 'kareena', 'mahadavan', 'sharman' ],
+    rating: 3,
+    ticket_no: 150,
+    price: -80
+  }
+]
+ 
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+5. find all movies whose name start with alphabate 
+
+
+movies_db> db.movies.find({'name':/^[a-z].*/i});
+[
+  {
+    _id: ObjectId('5aaa31a2639395f86922a87e'),
+    name: 'kahani',
+    actor: [ 'aaaa', 'bbbb', 'karan', 'karri', 'vidya' ],
+    ticket_no: 420,
+    price: 80,
+    ac7tors: [ 'bbbb' ],
+    rating: 7,
+    lastmodified: { '$date': '2019-04-07T11:25:40.634Z' }
+  },
+  {
+    _id: ObjectId('5aaa3334639395f86922a880'),
+    name: 'lagaan',
+    actor: [ 'amir', 'angraz' ],
+    rating: 6,
+    ticket_no: 410,
+    price: 70,
+    cancellation: {
+      date: { '$timestamp': { t: 1554356003, i: 1 } },
+      reason: 'user request'
+    },
+    lastModified: { '$date': '2019-04-04T05:33:23.022Z' }
+  },
+  {
+    _id: ObjectId('5aaa3334639395f86922a881'),
+    name: 'sholay',
+    actor: [
+      'Dharamendra',
+      'Amitabh',
+      'Sachin Pilgaokar',
+      'Dharamendra',
+      'Dharamendra',
+      'Mr. Khote',
+      'jaya bacchan',
+      'sanjiv kapoor'
+    ],
+    rating: 6,
+    ticket_no: 550,
+    price: 70,
+    position: [ 2, 2 ]
+  },
+  {
+    _id: ObjectId('5aaa3334639395f86922a882'),
+    name: 'aradhana',
+    actor: [ 'amitabh', 'prem', 'rajesh khanna' ],
+    rating: 3,
+    ticket_no: 550,
+    price: -19.9
+  },
+  {
+    _id: ObjectId('5aab6da4639395f86922a883'),
+    name: 'kahani 2',
+    ticket_no: 820,
+    actor: [
+      'vidya',  'Arjun',
+      'Jonny',  'nawaz',
+      'prasad', 'Shreyas',
+      'Jonny',  'yash'
+    ],
+    rating: 7,
+    price: 120
+  },
+  {
+    _id: ObjectId('5bf6a36f57b2d4cc676c7a95'),
+    name: 'Andhadhund',
+    price: 120,
+    actor: [ 'Ayushman', 'radhika' ],
+    rating: 4
+  },
+  {
+    _id: ObjectId('5bf6a38c57b2d4cc676c7a96'),
+    name: 'Andhadhund',
+    price: -80,
+    actor: [ 'Tabbu' ],
+    rating: 4
+  },
+  {
+    _id: ObjectId('5c8283789eb55675f0272933'),
+    name: 'uri',
+    rating: 5,
+    actor: [ 'vicky kaushal', 'yami', 'Paresh Rawal' ],
+    price: -80
+  },
+  {
+    _id: ObjectId('5c865923d82c19b8ed996550'),
+    name: 'Dil dhadakane do',
+    rating: 3,
+    price: 260,
+    actor: "['Anil kapoor']"
+  },
+  {
+    _id: ObjectId('5ca453ef2952ebdd7ae2a92f'),
+    name: 'Kesari',
+    actor: [ 'Akshay Kumar', 'Pariniti chopra' ],
+    rating: 6,
+    price: 270,
+    ticket_no: 270,
+    rdate: { '$date': '2019-01-23T00:00:00.000Z' }
+  },
+  {
+    _id: ObjectId('5ca456072952ebdd7ae2a930'),
+    name: 'paa',
+    actor: [ 'Amitabh', 'vidya balan', 'Abhishek' ],
+    rating: 2,
+    price: 190,
+    ticket_no: 210,
+    rdate: { '$date': '2019-01-23T00:00:00.000Z' },
+    others: { director: 'R Balki', songs: 'Amit trivedi' }
+  },
+  {
+    _id: ObjectId('5ca47e5b2952ebdd7ae2a931'),
+    name: 'padmavat',
+    rating: 4,
+    price: 170,
+    ticket_no: 300,
+    actor: [
+      'Deepika',
+      'shahid kapoor',
+      'ranveer singh',
+      'aditi Rao',
+      'aaaaa'
+    ],
+    cancellation: { date: { '$timestamp': { t: 1567175239, i: 1 } } }
+  },
+  {
+    _id: ObjectId('5ca47ef82952ebdd7ae2a932'),
+    name: 'newton',
+    ticket_no: 690,
+    actor: [ 'Rajkumar Rao', 'Pankaj Tripathi' ],
+    price: 230,
+    lastmodified: { '$date': '2019-09-28T14:47:49.204Z' }
+  },
+  {
+    _id: ObjectId('5d6935a3470e2bef2a82cdfa'),
+    name: 'mission mangal',
+    price: 270,
+    actor: [ 'Sonakshi', 'Vidya Balan' ],
+    rating: 6
+  },
+  {
+    _id: ObjectId('5d89e9adfd4adc2f84279f43'),
+    name: 'chichore',
+    price: 194,
+    rating: 4.3,
+    actor: [ 'sushant', 'shradha kapoor', 'zzz', 'harshal' ]
+  },
+  {
+    _id: ObjectId('5d8f51ce065d3e2aa902aa22'),
+    name: 'dream girl',
+    actor: [ 'ayushman', 'nushrat bharucha' ],
+    price: 170,
+    rating: null
+  }
+]
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+6. Create a capped collection of size 3 by name dept. Store dno,dname,location.
+Test this capped collection by adding new documents.
+
+
+movies_db> db.student.insertMany([{dno:10,dname:'sales',location:'Pune'},{dno:20,dname:'dac',location:'Kolhapur'},{dno:30,dname:'dbda',location:'Raigad'}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('68d39c7db7c365be5fcebea4'),
+    '1': ObjectId('68d39c7db7c365be5fcebea5'),
+    '2': ObjectId('68d39c7db7c365be5fcebea6')
+  }
+}
+
+movies_db> db.student.find()
+[
+  {
+    _id: ObjectId('68d39c7db7c365be5fcebea4'),
+    dno: 10,
+    dname: 'sales',
+    location: 'Pune'
+  },
+  {
+    _id: ObjectId('68d39c7db7c365be5fcebea5'),
+    dno: 20,
+    dname: 'dac',
+    location: 'Kolhapur'
+  },
+  {
+    _id: ObjectId('68d39c7db7c365be5fcebea6'),
+    dno: 30,
+    dname: 'dbda',
+    location: 'Raigad'
+  }
+]
+movies_db> db.student.insertOne({dno:40,dname:'ditiss',location:'Panjjab'})
+{
+  acknowledged: true,
+  insertedId: ObjectId('68d39cc9b7c365be5fcebea7')
+}
+movies_db> db.student.find()
+[
+  {
+    _id: ObjectId('68d39c7db7c365be5fcebea5'),
+    dno: 20,
+    dname: 'dac',
+    location: 'Kolhapur'
+  },
+  {
+    _id: ObjectId('68d39c7db7c365be5fcebea6'),
+    dno: 30,
+    dname: 'dbda',
+    location: 'Raigad'
+  },
+  {
+    _id: ObjectId('68d39cc9b7c365be5fcebea7'),
+    dno: 40,
+    dname: 'ditiss',
+    location: 'Panjjab'
+  }
+]
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+7. For movie "kahani 2" change rating to 5. Change price =400 and increase rating by 2 for all movies with name Kahani in it.
+
+
+movies_db> db.movies.updateOne({name:"kahani 2"},{ $set:{rating:5,price:400}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+movies_db> db.movies.find({name:'kahani 2'})
+[
+  {
+    _id: ObjectId('5aab6da4639395f86922a883'),
+    name: 'kahani 2',
+    ticket_no: 820,
+    actor: [
+      'vidya',  'Arjun',
+      'Jonny',  'nawaz',
+      'prasad', 'Shreyas',
+      'Jonny',  'yash'
+    ],
+    rating: 5,
+    price: 400
+  }
+]
+
+
+
+movies_db> db.movies.updateMany({name:/kahani.*/},{$inc:{rating:2}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+movies_db> db.movies.find({name:/kahani.*/})
+[
+  {
+    _id: ObjectId('5aaa31a2639395f86922a87e'),
+    name: 'kahani',
+    actor: [ 'aaaa', 'bbbb', 'karan', 'karri', 'vidya' ],
+    ticket_no: 420,
+    price: 80,
+    ac7tors: [ 'bbbb' ],
+    rating: 9,
+    lastmodified: { '$date': '2019-04-07T11:25:40.634Z' }
+  },
+  {
+    _id: ObjectId('5aab6da4639395f86922a883'),
+    name: 'kahani 2',
+    ticket_no: 820,
+    actor: [
+      'vidya',  'Arjun',
+      'Jonny',  'nawaz',
+      'prasad', 'Shreyas',
+      'Jonny',  'yash'
+    ],
+    rating: 7,
+    price: 400
+  }
+]
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+8. Write a MongoDB query to display  name, actor and rating of all movies.
+
+
+movies_db> db.movies.find({},{name:1,actor:1,rating:1,_id:0})
+[
+  {
+    name: 'kahani',
+    actor: [ 'aaaa', 'bbbb', 'karan', 'karri', 'vidya' ],
+    rating: 9
+  },
+  {
+    name: '3 idiots',
+    actor: [ 'Kareena Kapoor', 'amir', 'kareena', 'mahadavan', 'sharman' ],
+    rating: 3
+  },
+  { name: 'lagaan', actor: [ 'amir', 'angraz' ], rating: 6 },
+  {
+    name: 'sholay',
+    actor: [
+      'Dharamendra',
+      'Amitabh',
+      'Sachin Pilgaokar',
+      'Dharamendra',
+      'Dharamendra',
+      'Mr. Khote',
+      'jaya bacchan',
+      'sanjiv kapoor'
+    ],
+    rating: 6
+  },
+  {
+    name: 'aradhana',
+    actor: [ 'amitabh', 'prem', 'rajesh khanna' ],
+    rating: 3
+  },
+  {
+    name: 'kahani 2',
+    actor: [
+      'vidya',  'Arjun',
+      'Jonny',  'nawaz',
+      'prasad', 'Shreyas',
+      'Jonny',  'yash'
+    ],
+    rating: 7
+  },
+  { name: 'Andhadhund', actor: [ 'Ayushman', 'radhika' ], rating: 4 },
+  { name: 'Andhadhund', actor: [ 'Tabbu' ], rating: 4 },
+  {
+    name: 'uri',
+    rating: 5,
+    actor: [ 'vicky kaushal', 'yami', 'Paresh Rawal' ]
+  },
+  { name: 'Dil dhadakane do', rating: 3, actor: "['Anil kapoor']" },
+  {
+    name: 'Kesari',
+    actor: [ 'Akshay Kumar', 'Pariniti chopra' ],
+    rating: 6
+  },
+  {
+    name: 'paa',
+    actor: [ 'Amitabh', 'vidya balan', 'Abhishek' ],
+    rating: 2
+  },
+  {
+    name: 'padmavat',
+    rating: 4,
+    actor: [
+      'Deepika',
+      'shahid kapoor',
+      'ranveer singh',
+      'aditi Rao',
+      'aaaaa'
+    ]
+  },
+  { name: 'newton', actor: [ 'Rajkumar Rao', 'Pankaj Tripathi' ] },
+  {
+    name: 'mission mangal',
+    actor: [ 'Sonakshi', 'Vidya Balan' ],
+    rating: 6
+  },
+  {
+    name: 'chichore',
+    rating: 4.3,
+    actor: [ 'sushant', 'shradha kapoor', 'zzz', 'harshal' ]
+  },
+  {
+    name: 'dream girl',
+    actor: [ 'ayushman', 'nushrat bharucha' ],
+    rating: null
+  },
+  {}
+]
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+9. find all movies with name ends with t
+
+
+movies_db> db.movies.find({name:/.*t$/},{name:1})
+[ { _id: ObjectId('5ca47e5b2952ebdd7ae2a931'), name: 'padmavat' } ]
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+10. find all movies with name starts with p or a  and ends with t or a
+
+
+movies_db> db.movies.find({name:/^[p,a].*[t,a]$/i},{name:1})
+[
+  { _id: ObjectId('5aaa3334639395f86922a882'), name: 'aradhana' },
+  { _id: ObjectId('5ca456072952ebdd7ae2a930'), name: 'paa' },
+  { _id: ObjectId('5ca47e5b2952ebdd7ae2a931'), name: 'padmavat' }
+]
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+11. insert 6 documents in emp collection having eno,ename,sal,comm,desg in the column list. desg is designation of employee.
+Create documents having following info
+eno    ename         sal                                 comm                                    desg
+101        Ajit          1000                   no commission field                      manager
+102       Sagar        no sal field                          0                                     analyst  
+103       Sakshi        1200                      no commission column           programmer
+ 104       Rupa         3000                   no commission column               programmer
+ 105      Maya         900                             800                                          accountant
+ 106     Amol         1200                             700                                         manager
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+1. Update salary of all employees by giving an increment of Rs. 4000.
+
+
+movies_db> db.employees.updateMany({},[{$set:{sal:{$add:[{ $ifNull: ["$sal", 0]},4000]}}}]);
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 6,
+  modifiedCount: 6,
+  upsertedCount: 0
+}
+movies_db> db.employees.find({},{eno:1,sal:1})
+[
+  { _id: ObjectId('68d3a4fdb7c365be5fcebea8'), eno: 101, sal: 5000 },
+  { _id: ObjectId('68d3a4fdb7c365be5fcebea9'), eno: 102, sal: 4000 },
+  { _id: ObjectId('68d3a4fdb7c365be5fcebeaa'), eno: 103, sal: 5200 },
+  { _id: ObjectId('68d3a4fdb7c365be5fcebeab'), eno: 104, sal: 7000 },
+  { _id: ObjectId('68d3a4fdb7c365be5fcebeac'), eno: 105, sal: 4900 },
+  { _id: ObjectId('68d3a4fdb7c365be5fcebead'), eno: 106, sal: 5200 }
+]
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+2.  count employees getting sal>5000
+
+
+movies_db> db.employees.find({sal:{$gt:5000}}).count()
+3
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+3. list employee getting max sal
+
+
+movies_db> db.employees.aggregate([{$group:{_id:1,max_sal:{$max:"$sal"}}}]);
+[ { _id: 1, max_sal: 7000 } ]
+
+
+
+movies_db> db.employees.find().sort({ sal: -1 }).limit(1)
+[
+  {
+    _id: ObjectId('68d3a4fdb7c365be5fcebeab'),
+    eno: 104,
+    ename: 'Rupa',
+    sal: 7000,
+    desg: 'programmer'
+  }
+]
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+4. list emps with eno 101,106,104
+
+
+movies_db> db.employees.find({eno:{$in:[101,106,104]}})
+[
+  {
+    _id: ObjectId('68d3a4fdb7c365be5fcebea8'),
+    eno: 101,
+    ename: 'Ajit',
+    sal: 5000,
+    desg: 'manager'
+  },
+  {
+    _id: ObjectId('68d3a4fdb7c365be5fcebeab'),
+    eno: 104,
+    ename: 'Rupa',
+    sal: 7000,
+    desg: 'programmer'
+  },
+  {
+    _id: ObjectId('68d3a4fdb7c365be5fcebead'),
+    eno: 106,
+    ename: 'Amol',
+    sal: 5200,
+    comm: 700,
+    desg: 'manager'
+  }
+]
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+5. list emps who are not managers
+
+
+movies_db> db.employees.find({desg:{$nin:['manager']}})
+[
+  {
+    _id: ObjectId('68d3a4fdb7c365be5fcebea9'),
+    eno: 102,
+    ename: 'Sagar',
+    comm: 0,
+    desg: 'analyst',
+    sal: 4000
+  },
+  {
+    _id: ObjectId('68d3a4fdb7c365be5fcebeaa'),
+    eno: 103,
+    ename: 'Sakshi',
+    sal: 5200,
+    desg: 'programmer'
+  },
+  {
+    _id: ObjectId('68d3a4fdb7c365be5fcebeab'),
+    eno: 104,
+    ename: 'Rupa',
+    sal: 7000,
+    desg: 'programmer'
+  },
+  {
+    _id: ObjectId('68d3a4fdb7c365be5fcebeac'),
+    eno: 105,
+    ename: 'Maya',
+    sal: 4900,
+    comm: 800,
+    desg: 'accountant'
+  }
+]
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+6. Update designation of an employee named “Ajit ” from manager to director. 
+
+
+movies_db> db.employees.updateOne({ename:'Ajit'},{$set:{desg:'director'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+movies_db> db.employees.find({name:'Ajit'},{})
+
+movies_db> db.employees.find({ename:'Ajit'},{})
+[
+  {
+    _id: ObjectId('68d3a4fdb7c365be5fcebea8'),
+    eno: 101,
+    ename: 'Ajit',
+    sal: 5000,
+    desg: 'director'
+  }
+]
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+12. Create ER diagram for library management system. Using paper and pen.
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------

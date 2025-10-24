@@ -1,0 +1,28 @@
+
+public class temp {
+	create ajava console based program to manage employee tasks within an organization. each task should have:
+		-task Id(auto-generated)
+		-Employee name
+		-Task title
+		-Task description
+		-task status (Enum: COMPLETED, IN_PROGRESS, PENDING)
+		-Assigned date(use java.util.Date)
+	
+	program should provide the following functionalities
+		1. Add a new task record (store task details in a file)
+		2. display all task assigned to a specific employee
+		3. display task by status(COMPLETED/ IN_PROGRESS/ PENDING)
+		4. display count of completed task per employee.
+		5. list all tasks sorted by assigned date(read from file)
+		6. exit
+		
+	note: 
+		use ArrayList<Task> to store task records in memory.
+		save and read from a file named "tasks.txt" to persist data.
+		Implement custome exceptions for:
+			-EmptyFieldException- throws when a required field(Employee name, task title or discription) is Empty.
+			-duplicateTaskException- thrown when the same task (same employee + task title) already exists.
+		handle file I/O exception gracefully.
+		use simple loops, conditionals, and basic Collections.
+		follow clean coding conventions
+}

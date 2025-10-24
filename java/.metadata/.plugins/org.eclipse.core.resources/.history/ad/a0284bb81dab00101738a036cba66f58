@@ -1,0 +1,31 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class Entry {
+
+	static boolean loop = true;
+	//static InputHandler InputHandler = new InputHandler();
+	static Scanner sc = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		
+		
+		ArrayList<Task> taskArr = new ArrayList<>();
+		
+		while(loop == true) {
+			
+			System.out.println("1. Add new task record\n 2. display all task assigned to a specific employee\n 3. display task by records\n4. display count of completed task per employee\n 5. list all task sorted by assigned date\n 6. exit");
+			int choice = sc.nextInt();
+			switch(choice) {
+			case 1 : {
+				InputHandler.addNewTask(taskArr);
+			}
+			}
+			
+		}
+		
+
+	}
+
+}

@@ -1,0 +1,15 @@
+package transaction;
+
+
+import java.time.LocalDate;
+
+public class Entry {
+
+	public static void main(String[] args) {
+		LocalDate d = new LocaDa
+		Transaction ob1 = new Transaction(1, now(), 0, false, false);
+				Date date = now();
+
+	}
+
+}

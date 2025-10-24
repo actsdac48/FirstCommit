@@ -1,0 +1,6 @@
+
+public class EmployeeExheption extends Exception {
+    public EmployeeExheption(String message) {
+        super(message);
+    }
+}

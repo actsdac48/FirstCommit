@@ -1,0 +1,17 @@
+package otherOnPreDefinedFunctionalInterface;
+
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.time.LocalDateTime;
+
+public class PrintCurrentDate {
+
+	public static void main(String[] args) {
+		
+		Supplier<LocalDateTime> num = () -> LocalDateTime.now();
+		
+		System.out.println(num);
+
+	}
+
+}

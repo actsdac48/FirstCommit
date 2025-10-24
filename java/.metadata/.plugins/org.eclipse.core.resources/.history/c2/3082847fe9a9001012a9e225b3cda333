@@ -1,0 +1,15 @@
+package libearymanagement;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Library {
+
+	public static void main(String[] args) {
+		
+		Map<String, Book> books = new HashMap<>();
+		Map<String, Member> members = new HashMap<>();
+
+	}
+
+}

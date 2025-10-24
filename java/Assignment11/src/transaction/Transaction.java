@@ -1,0 +1,35 @@
+package transaction;
+
+import java.time.LocalDateTime;
+
+public class Transaction {
+
+		int txI; 
+		public LocalDateTime txDate;
+		float txAmount;
+		boolean txStatus; 
+		boolean txArrears;
+		
+		public Transaction(int txI, LocalDateTime txDate, float txAmount, boolean txStatus, boolean txArrears) {
+			super();
+			this.txI = txI;
+			this.txDate = txDate;
+			this.txAmount = txAmount;
+			this.txStatus = txStatus;
+			this.txArrears = txArrears;
+		}
+
+		
+		@Override
+		public String toString() {
+			return "Transaction [txI=" + txI + ", txDate=" + txDate + ", txAmount=" + txAmount + ", txStatus="
+					+ txStatus + ", txArrears=" + txArrears + "]";
+		}
+		
+		
+		
+
+
+	
+
+}

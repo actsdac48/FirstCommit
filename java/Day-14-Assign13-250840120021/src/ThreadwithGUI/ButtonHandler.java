@@ -1,0 +1,40 @@
+package ThreadwithGUI;
+
+import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ButtonHandler implements ActionListener {
+
+	int count = 0;
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().equals("Start")) {
+			MainFrame frm = ((MainFrame) ((Button) e.getSource()).getParent());
+			System.out.println(frm.executer);
+			System.out.println(frm.some);
+			frm.executer.execute(new BounceRect(frm));
+
+			System.out.println(++count);
+
+
+			((MainFrame)((Button)e.getSource()).getParent()).runningStatus = true; 
+			Thread objThread = new Thread(new BounceRect((MainFrame)((Button)e.getSource()).getParent()));
+			objThread.setDaemon(true);
+			((MainFrame)((Button)e.getSource()).getParent()).refRectThread = objThread;
+			objThread.start();
+
+			Thread objCircleThread = new Thread(new BounceCircle((MainFrame)((Button)e.getSource()).getParent()));
+			objCircleThread.setDaemon(true);
+			objCircleThread.start();
+
+		}
+
+		else {
+			((MainFrame) ((Button) e.getSource()).getParent()).runningStatus = false;
+		}
+
+	}
+
+}

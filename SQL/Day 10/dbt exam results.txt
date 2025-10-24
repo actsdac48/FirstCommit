@@ -1,0 +1,562 @@
+10.Consider a table named "employees" with columns: "employee_id", "first_name", "last_name", "salary" ,and "hire_date". Which query will retrieve the names of employees who have the same salary as "John Doe" and were hired on the same date as "John Doe"?
+Question 1Answer
+
+a.
+SELECT first_name, last_name FROM employees WHERE hire_date = (SELECT salary, hire_date FROM employees WHERE first_name = 'John' );
+
+b.
+select first_name, last_name from employee where sal = (select sal from employee where first_name='John' and last_name='Doe') and hire_date like (SELECT hire_date FROM employees WHERE first_name = 'John' AND last_name = 'Doe');
+
+c.
+SELECT first_name, last_name FROM employees WHERE salary = (SELECT salary FROM employees WHERE first_name = 'John' AND last_name = 'Doe') AND hire_date = (SELECT hire_date FROM employees WHERE first_name = 'John' AND last_name = 'Doe');
+
+d.
+select first_name, last_name from employee where sal = (select sal from employee where first_name='John' and last_name='Doe');
+Feedback
+The correct answer is: SELECT first_name, last_name FROM employees WHERE salary = (SELECT salary FROM employees WHERE first_name = 'John' AND last_name = 'Doe') AND hire_date = (SELECT hire_date FROM employees WHERE first_name = 'John' AND last_name = 'Doe');
+Question 2
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+32.Which keyword used with UNION operator does not retain duplicate rows?
+Question 2Answer
+
+a.
+NARROW
+
+b.
+DISTINCT
+
+c.
+ALL
+
+d.
+STRICT
+Feedback
+The correct answer is: ALL
+Question 3
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+34.To produce a meaningful result set without any Cartesian product, what is the minimum number of join conditions that should appear for joining four-tables ?
+Question 3Answer
+
+a.
+5
+
+b.
+3
+
+c.
+No such criteria
+
+d.
+4
+Feedback
+The correct answer is: 3
+Question 4
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+3.An attribute or a combination of attributes in one table whose values must either match the primary key in another table or be null is called as ________________
+Question 4Answer
+
+a.
+Foreign Key
+
+b.
+Super Key
+
+c.
+Secondary Key
+
+d.
+Candidate Key
+Feedback
+The correct answer is: Foreign Key
+Question 5
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+4.You have just removed 1,700 rows from a table. In order to save the changes, you’ve made to the database, which of the following statement is used?
+Question 5Answer
+
+a.
+Rollback
+
+b.
+Commit.
+
+c.
+Set transaction
+
+d.
+Savepoint.
+Feedback
+The correct answer is: Commit.
+Question 6
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+5.In a view, ____________ specifies that rows may only read from the base tables
+Question 6Answer
+
+a.
+WITH READ ONLY.
+
+b.
+WITH READ.
+
+c.
+READ ONLY
+
+d.
+READ
+Feedback
+The correct answer is: WITH READ ONLY.
+Question 7
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+7.Select the correct query to display user age in the descending order.
+Question 7Answer
+
+a.
+db.users.find().limit()
+
+b.
+db.users.find().
+
+c.
+db.users.find().sort({age:-1})
+
+d.
+db.users.find().sort({age:1})
+Feedback
+The correct answer is: db.users.find().sort({age:-1})
+Question 8
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+8.In a correlated subquery, what is the role of the outer query and the inner subquery?
+Question 8Answer
+
+a.
+The outer query retrieves data from one table, and the inner subquery retrieves data from another table.
+
+b.
+The outer query performs filtering, and the inner subquery performs sorting.
+
+c.
+The outer query performs grouping, and the inner subquery performs aggregation.
+
+d.
+The outer query provides a condition for filtering, and the inner subquery uses that condition based on the data from the outer query.
+Feedback
+The correct answer is: The outer query provides a condition for filtering, and the inner subquery uses that condition based on the data from the outer query.
+Question 9
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+11.Which subquery cannot be executed by itself as a separate statement?
+Question 9Answer
+
+a.
+EXISTS
+
+b.
+NOT EXISTS
+
+c.
+Correlated
+
+d.
+Uncorrelated
+Feedback
+The correct answer is: Correlated
+Question 10
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+12.Which of the following is a comparison operator in MySQL ?
+Question 10Answer
+
+a.
+=
+
+b.
+BETWEEN..AND
+
+c.
+All of the above
+
+d.
+LIKE
+Feedback
+The correct answer is: All of the above
+Question 11
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+13.What is the difference between truncate and delete ?
+Question 11Answer
+
+a.
+Both commands are functionally same and can be replaced with each other.
+
+b.
+Transactions can be rolled back after delete but not after truncate.
+
+c.
+Roll back works for both truncate and delete.
+
+d.
+Delete cannot be used to delete all rows where as truncate can be used to delete all rows.
+Feedback
+The correct answer is: Transactions can be rolled back after delete but not after truncate.
+Question 12
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+14.Triggers do not support ____________.
+Question 12Answer
+
+a.
+update
+
+b.
+view
+
+c.
+delete
+
+d.
+insert
+Feedback
+The correct answer is: view
+Question 13
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+17.Which one is true about clustered index?
+Question 13Answer
+
+a.
+Clustered index is built by default on unique key columns
+
+b.
+Clustered index is not associated with table update
+
+c.
+Clustered index is built when any constraint is applied on the table.
+
+d.
+None of the above
+Feedback
+The correct answer is: Clustered index is built by default on unique key columns
+Question 14
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+18.What cannot be done on views ?
+Question 14Answer
+
+a.
+Filter
+
+b.
+Display
+
+c.
+Join
+
+d.
+Index
+Feedback
+The correct answer is: Index
+Question 15
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+19.The student marks should not be greater than 100. This is a ___
+Question 15Answer
+
+a.
+Data Integrity constraint
+
+b.
+Referential constraint
+
+c.
+Feasible constraint
+
+d.
+Over-defined constraint
+Feedback
+The correct answer is: Data Integrity constraint
+Question 16
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+1.The primary key is selected from the set of
+Question 16Answer
+
+a.
+Candidate keys
+
+b.
+Determinants
+
+c.
+Foreign keys
+
+d.
+Composite keys.
+Feedback
+The correct answer is: Candidate keys
+Question 17
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+20.What is the result of an SQL INNER JOIN when there is no matching row between the tables being joined?
+Question 17Answer
+
+a.
+The query returns a single row with NULL values.
+
+b.
+The query returns empty set.
+
+c.
+The query returns all rows from both tables.
+
+d.
+The query returns an error.
+Feedback
+The correct answer is: The query returns empty set.
+Question 18
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+21.Given a table named "sales" with columns: "sale_id", "sale_date", "product_id", and "quantity", which query will retrieve the total quantity of each product sold for each day?
+Question 18Answer
+
+a.
+SELECT sale_date, product_id, SUM(quantity) FROM sales GROUP BY product_id;
+
+b.
+SELECT sale_date, product_id, SUM(quantity) FROM sales GROUP BY sale_date;
+
+c.
+SELECT sale_date, product_id, SUM(quantity) FROM sales;
+
+d.
+SELECT sale_date, product_id, SUM(quantity) FROM sales GROUP BY sale_date, product_id;
+Feedback
+The correct answer is: SELECT sale_date, product_id, SUM(quantity) FROM sales GROUP BY sale_date, product_id;
+Question 19
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+22.What is the purpose of the DISTINCT keyword in MySQL?
+Question 19Answer
+
+a.
+It filters rows based on specific conditions.
+
+b.
+It performs mathematical calculations on numeric columns.
+
+c.
+It groups rows together based on a common column.
+
+d.
+It removes duplicate rows from the result set.
+Feedback
+The correct answer is: It removes duplicate rows from the result set.
+Question 20
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+23.What SQL command can be used to add columns to a table?
+Question 20Answer
+
+a.
+ALTER TABLE TableName ADD ColumnName datatype
+
+b.
+MODIFY TABLE TableName ADD COLUMN ColumnName
+
+c.
+ALTER TABLE TableName ADD COLUMN ColumnName
+
+d.
+MODIFY TABLE TableName ADD ColumnName
+Feedback
+The correct answer is: ALTER TABLE TableName ADD ColumnName datatype
+Question 21
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+25.What operator is used to prevent the error: ‘single row sub query returns more than one row’ ?
+Question 21Answer
+
+a.
+Use the >= operator
+
+b.
+Use the IN operator
+
+c.
+Use the CAN EXIST operator
+
+d.
+Use the = operator
+Feedback
+The correct answer is: Use the IN operator
+Question 22
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+26.The keyword used to transfer control from a function back to the calling function is
+Question 22Answer
+
+a.
+Goto
+
+b.
+Return
+
+c.
+Go Back
+
+d.
+Switch
+Feedback
+The correct answer is: Return
+Question 23
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+27.What is used to optimize search?
+Question 23Answer
+
+a.
+Group by Clause
+
+b.
+View
+
+c.
+Sort
+
+d.
+Index
+Feedback
+The correct answer is: Index
+Question 24
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+28.Which of the following set operator is not supported by MySQL
+Question 24Answer
+
+a.
+Minus
+
+b.
+Except
+
+c.
+Union
+
+d.
+Union all
+Feedback
+The correct answer is: Minus
+Question 25
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+2.Storing same data in many places is called.
+Question 25Answer
+
+a.
+Data Enumeration
+
+b.
+Data Redundancy
+
+c.
+Data Iteration.
+
+d.
+Concurrency of data.
+Feedback
+The correct answer is: Data Redundancy
+Question 26
+Correct
+Mark 1.00 out of 1.00
+Flag question
+Question text
+30. Which of the following PL/SQL program construct must return a value?
+Question 26Answer
+
+a.
+Stored Procedure
+
+b.
+Database Triggers
+
+c.
+Anonymous Block
+
+d.
+Stored Function
+Feedback
+The correct answer is: Stored Function
+Question 27
+Incorrect
+Mark 0.00 out of 1.00
+Flag question
+Question text
+31.NOT FOUND handler is declared in MySQL cursor  ....
+Question 27Answer
+
+a.
+Because it generates an error if condition in where clause fails to fetch any single row.
+
+b.
+Because it handles the situation when cursor dose not find any row.
+
+c.
+Because it generates an error if select clause contains unknown column.
+
+d.
+Because it generates an error if table is not found in the connected Database.
+Feedback
+The correct answer is: Because it handles the situation when cursor dose not find any row.

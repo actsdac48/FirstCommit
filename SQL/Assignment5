@@ -1,0 +1,879 @@
+Use regexp_like to solve the below queries
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q1. Find all employees with name ending with R . 
+
+
+mysql> select * from EMP where regexp_like(ename, 'R$');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+----------+------+------------+------+------+--------+
+2 rows in set (0.03 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q2. Find all employees with name starting with M and ending with R.
+
+
+mysql> select * from EMP where regexp_like(ename, '^M.*R$');
++-------+--------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-------+------+------------+------+------+--------+
+|  7934 | MILLER | CLERK | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q3. To find all employees with name starting with either M or A.
+
+
+mysql> select * from EMP where regexp_like(ename, '^M.*|^A');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7876 | ADAMS  | CLERK    | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+----------+------+------------+------+------+--------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q4. List the employees name having letter 'L' as the second character.
+
+
+mysql> select * from EMP where regexp_like(ename, '^.L');
++-------+-------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7698 | BLAKE | MANAGER  | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK | MANAGER  | 7839 | 1981-06-09 | 2450 | NULL |     10 |
++-------+-------+----------+------+------------+------+------+--------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q5. Find all employees with name having L at 3 rd position.
+
+
+mysql> select * from EMP where regexp_like(ename, '^..L');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+----------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q6. To list all employees with name ending by ES.  
+
+
+
+mysql> select * from EMP where regexp_like(ename, 'ES$');
++-------+-------+---------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+---------+------+------------+------+------+--------+
+|  7566 | JONES | MANAGER | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7900 | JAMES | CLERK   | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+-------+---------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q7. To list all employees with job starting with C and ending with K.
+
+
+mysql> select * from EMP where regexp_like(job, '^C.*K$');
++-------+--------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7876 | ADAMS  | CLERK | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7934 | MILLER | CLERK | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-------+------+------------+------+------+--------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q8. To find all employees with name starting with either M or A and last character as either R or E.
+
+
+
+mysql> select * from EMP where regexp_like(ename, '^M|^A') and regexp_like(ename, 'R$|E$');
++-------+--------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-------+------+------------+------+------+--------+
+|  7934 | MILLER | CLERK | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q9. To find all employee with name starting with A or M and ending with E.
+
+
+mysql> select * from EMP where regexp_like(ename, '^M|^A') and regexp_like(ename, 'E$');
+Empty set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q10. Find all employees with name starting with A and ending with N, or it may start with S and end with H.
+
+
+mysql> select * from EMP where regexp_like(ename, '^A.*N$|^S.*H$');
++-------+-------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+----------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK    | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
++-------+-------+----------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q11. Find all employees with name starting with M, having  L at 3 rd position and ends with R.
+
+
+mysql> select * from EMP where regexp_like(ename, '^M.L.*R$');
++-------+--------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-------+------+------------+------+------+--------+
+|  7934 | MILLER | CLERK | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q12. Find all employees with name having L at 3 rd position and E at second last position.
+
+
+mysql> select * from EMP where regexp_like(ename, '..L.*E.');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+----------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q13. Find all employees with name not starting with A or M
+
+
+mysql> select * from EMP where not regexp_like(ename, '^M|^A');
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+--------+-----------+------+------------+------+------+--------+
+10 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q14. Display all employees with sal >1000 and sal<3000 and job has A at starting position and ends with T.
+
+
+mysql> select * from EMP where sal>1000 and sal<3000 and  regexp_like(job, '^A.*T$');
+Empty set (0.00 sec)
+
+
+
+
+//using between.....and
+mysql> select * from EMP where sal between 1000 and 3000 and  regexp_like(job, '^A.*T$');
++-------+-------+---------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+---------+------+------------+------+------+--------+
+|  7788 | SCOTT | ANALYST | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7902 | FORD  | ANALYST | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q15. Write a query  to display empno, ename, sal , increased sal by 10% and commission for all employees  whose  name starts with A,M or S.
+
+
+mysql> select empno, ename, sal, sal+(sal*(10/100)) "Increased sal", comm from EMP where regexp_like(ename, '^M|^A|^S');
++-------+--------+------+---------------+------+
+| empno | ename  | sal  | Increased sal | comm |
++-------+--------+------+---------------+------+
+|  7369 | SMITH  |  800 |           880 | NULL |
+|  7499 | ALLEN  | 1600 |          1760 |  300 |
+|  7654 | MARTIN | 1250 |          1375 | 1400 |
+|  7788 | SCOTT  | 3000 |          3300 | NULL |
+|  7876 | ADAMS  | 1100 |          1210 | NULL |
+|  7934 | MILLER | 1300 |          1430 | NULL |
++-------+--------+------+---------------+------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q16. Display all employees whose name starts with A and ends with either N or S, or works in dept 10.   
+
+
+
+mysql> select * from EMP where regexp_like(ename, '^A.*N$|^A.*S$') or deptno=10;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q17. List all departments whose name has atleast 8 characters.
+
+
+mysql> select * from DEPT where length(dname)>=8;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q18. List the employees name having 'E' as a second last character.
+
+
+mysql> select * from EMP where regexp_like(ename, '.*E.');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7566 | JONES  | MANAGER  | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+----------+------+------------+------+------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q19. List the details of the employee , whose names start with ‘A’ and end with ‘S’ or whose names contains N as the second or third character,and end with either ‘N’ or ‘S’.
+
+
+mysql> select * from EMP where (regexp_like(ename, '^A.*S$') or regexp_like(ename, '^.N|^..N')) and regexp_like(ename, 'N$|S$');
++-------+-------+---------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+---------+------+------------+------+------+--------+
+|  7566 | JONES | MANAGER | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7876 | ADAMS | CLERK   | 7788 | 1983-01-12 | 1100 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q20. List employees whose name starts with either 'A' or 'S' in dept 20.
+
+
+mysql> select * from EMP where regexp_like(ename, '^A|^S') or deptno=20;
++-------+-------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+----------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK    | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7566 | JONES | MANAGER  | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7788 | SCOTT | ANALYST  | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7876 | ADAMS | CLERK    | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7902 | FORD  | ANALYST  | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+-------+----------+------+------------+------+------+--------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q21. To list all employees with job starting with C , E at 3rd position and  ending with K.
+
+
+mysql> select * from EMP where regexp_like(job, '^C.E.*K$');
++-------+--------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7876 | ADAMS  | CLERK | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7934 | MILLER | CLERK | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-------+------+------------+------+------+--------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q22. To list all employees with job containing L at third position and M at third last position.
+
+
+mysql> select * from EMP where regexp_like(job, '..L.*M..');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
++-------+--------+----------+------+------------+------+------+--------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q23. To list all employees with comm is null and name starts with ‘S’
+
+
+
+mysql> select * from EMP where comm is null and regexp_like(ename, '^S');
++-------+-------+---------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+---------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK   | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7788 | SCOTT | ANALYST | 7566 | 1982-12-09 | 3000 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q24. List employees in all dept whose salary not in the range of 2000 to 3000 with the job which is having a  string   called 'MAN' at the end.  
+
+
+mysql> select * from EMP where sal not between 2000 and 3000 and regexp_like(job, 'MAN$');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
++-------+--------+----------+------+------------+------+------+--------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q25. List all the employee whose name does not end with 'S' in dept 20 and 30?
+
+
+mysql> select * from EMP where deptno in(20,30) and not regexp_like(ename, 'S$');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK    | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7788 | SCOTT  | ANALYST  | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7902 | FORD   | ANALYST  | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+--------+----------+------+------------+------+------+--------+
+8 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q26. Display dept names which are having letter 'O'.
+
+
+mysql> select * from DEPT where regexp_like(dname, '.*O.*');
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q27. Display list all employees whose name ends with ER.
+
+
+mysql> select * from EMP where regexp_like(ename, 'ER$');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+----------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q28. Display all employees where comm is null and name starts with ‘S’.
+
+
+mysql> select * from EMP where comm is null and regexp_like(ename, '^S');
++-------+-------+---------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+---------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK   | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7788 | SCOTT | ANALYST | 7566 | 1982-12-09 | 3000 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+*****************Group by and mixed queries*************************
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q1. List sum of salary for each department.
+
+
+mysql> select deptno, sum(sal) from EMP group by deptno;
++--------+----------+
+| deptno | sum(sal) |
++--------+----------+
+|     20 |    10875 |
+|     30 |     9400 |
+|     10 |     8750 |
++--------+----------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q2. List department wise sum sal only if the sum for any department is  > 10000.
+
+
+mysql> select deptno, sum(sal) from EMP group by deptno having sum(sal)>10000;
++--------+----------+
+| deptno | sum(sal) |
++--------+----------+
+|     20 |    10875 |
++--------+----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q3. Display job wise sum of salary if the sum salary is >6000. Exclude dept 30 .
+
+
+mysql> select job, sum(sal) from EMP where not deptno= 30 group by job having sum(sal)>6000;
+Empty set (0.00 sec)
+
+    
+mysql> select job, sum(sal)
+    -> from EMP 
+    -> where not deptno= 30 
+    -> group by job;
++-----------+----------+
+| job       | sum(sal) |
++-----------+----------+
+| CLERK     |     3200 |
+| MANAGER   |     5425 |
+| ANALYST   |     6000 |
+| PRESIDENT |     5000 |
++-----------+----------+
+4 rows in set (0.00 sec)
+
+
+
+mysql> select job, sum(sal) from EMP where not deptno= 30 group by job having sum(sal)>=6000;
++---------+----------+
+| job     | sum(sal) |
++---------+----------+
+| ANALYST |     6000 |
++---------+----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q4. Display job wise max sal only for managers, clerks, salesman working in dept 10 and 20. Sort the data by des order of the max salary.
+
+
+mysql> select job, max(sal) from EMP where job in("manager","clerk","salesman") and (deptno in(10,20)) group by job order by max(sal) desc;
++---------+----------+
+| job     | max(sal) |
++---------+----------+
+| MANAGER |     2975 |
+| CLERK   |     1300 |
++---------+----------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q5. Display job wise number of employees in all the department with total salary > 3000
+
+
+mysql> select job, count(*) from EMP group by job having sum(sal)>3000;
++-----------+----------+
+| job       | count(*) |
++-----------+----------+
+| CLERK     |        4 |
+| SALESMAN  |        4 |
+| MANAGER   |        3 |
+| ANALYST   |        2 |
+| PRESIDENT |        1 |
++-----------+----------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q6. Display the department number having atleast 4 employees in it.
+
+
+mysql> select deptno, count(*) from EMP group by deptno having count(*)>=4;
++--------+----------+
+| deptno | count(*) |
++--------+----------+
+|     20 |        5 |
+|     30 |        6 |
++--------+----------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q7. Implement following using case statement. Use data from emp database.
+If comm is null ‘need improvement’ If <500 “ok” If >=500 and < 1000 ‘good' ‘Excellent'.
+
+
+
+mysql> select ename, sal, job, comm, case when comm<500 then "OK" when comm >= 500 and comm < 1000 then "good" when comm >= 1000 then "Excellent" when comm is null then "need improvement" else " " end "remark" from EMP;
++--------+------+-----------+------+------------------+
+| ename  | sal  | job       | comm | remark           |
++--------+------+-----------+------+------------------+
+| SMITH  |  800 | CLERK     | NULL | need improvement |
+| ALLEN  | 1600 | SALESMAN  |  300 | OK               |
+| WARD   | 1250 | SALESMAN  |  500 | good             |
+| JONES  | 2975 | MANAGER   | NULL | need improvement |
+| MARTIN | 1250 | SALESMAN  | 1400 | Excellent        |
+| BLAKE  | 2850 | MANAGER   | NULL | need improvement |
+| CLARK  | 2450 | MANAGER   | NULL | need improvement |
+| SCOTT  | 3000 | ANALYST   | NULL | need improvement |
+| KING   | 5000 | PRESIDENT | NULL | need improvement |
+| TURNER | 1500 | SALESMAN  |    0 | OK               |
+| ADAMS  | 1100 | CLERK     | NULL | need improvement |
+| JAMES  |  950 | CLERK     | NULL | need improvement |
+| FORD   | 3000 | ANALYST   | NULL | need improvement |
+| MILLER | 1300 | CLERK     | NULL | need improvement |
++--------+------+-----------+------+------------------+
+14 rows in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q8. Display  salary sum and min(sal) for all employees who are managers.
+
+
+mysql> select job, sum(sal), min(sal) from EMP where job='manager' group by job;
++---------+----------+----------+
+| job     | sum(sal) | min(sal) |
++---------+----------+----------+
+| MANAGER |     8275 |     2450 |
++---------+----------+----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q9. Find sum(sal) for each dept having more than 2 clerk.    
+
+
+mysql> select deptno, sum(sal), count(*) from EMP where job="clerk" group by deptno having count(*)=2;
++--------+----------+----------+
+| deptno | sum(sal) | count(*) |
++--------+----------+----------+
+|     20 |     1900 |        2 |
++--------+----------+----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q10. Calculate how many employees earn sal more than 1500 in each dept.
+
+
+mysql> select deptno, count(*) from EMP where sal >1500  group by deptno;
++--------+----------+
+| deptno | count(*) |
++--------+----------+
+|     30 |        2 |
+|     20 |        3 |
+|     10 |        2 |
++--------+----------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q11. List mgr and number of employees reporting to each mgr(manager)
+Please consider mgr as manager no and not the job manager.
+
+
+mysql> select mgr, count(*) from EMP group by mgr;
++------+----------+
+| mgr  | count(*) |
++------+----------+
+| 7902 |        1 |
+| 7698 |        5 |
+| 7839 |        3 |
+| 7566 |        2 |
+| NULL |        1 |
+| 7788 |        1 |
+| 7782 |        1 |
++------+----------+
+7 rows in set (0.01 sec)
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Q12. Display dept with maximun employees. Display deptno and the employee count.
+
+
+mysql> select deptno, count(*) from EMP group by deptno order by count(*) desc limit 1;
++--------+----------+
+| deptno | count(*) |
++--------+----------+
+|     30 |        6 |
++--------+----------+
+1 row in set (0.00 sec)
+
+
+
+

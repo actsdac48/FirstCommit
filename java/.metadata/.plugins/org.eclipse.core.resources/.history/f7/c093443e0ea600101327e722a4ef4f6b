@@ -1,0 +1,25 @@
+package otherOnPreDefinedFunctionalInterface;
+
+import java.util.Scanner;
+import java.util.function.IntPredicate;
+
+public class PrimeOrNot {
+	
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter a nuymber to check a prime or not : ");
+		int num = sc.nextInt();
+		
+		
+		 IntPredicate intPredicate = (x) ->
+	        {
+	            if (num % 2 == 0)
+	                return true;
+	            return false;
+	        };
+		
+	        System.out.println(intPredicate.test(num));
+	}
+}

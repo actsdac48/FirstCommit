@@ -1,0 +1,14 @@
+package otherOnPreDefinedFunctionalInterface;
+
+public class PrimeOrNot {
+	
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter a nuymber to check a prime or not : ");
+		int num = 
+		
+		
+	}
+}

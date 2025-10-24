@@ -1,0 +1,50 @@
+package transaction;
+
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Entry {
+	
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		ArrayList<Transaction> trnsCollecton = new ArrayList<Transaction>();
+		
+		int loop = 0;
+		
+		while(loop < 3) {
+			
+			System.out.println("Enter transaction number :");
+			int txI = sc.nextInt();
+			
+			LocalDateTime d = LocalDateTime.now();
+			
+			System.out.println("Enter transaction Amount :");
+			float txAmount = sc.nextInt();
+			
+			System.out.println("Enter transaction status (true or false) :");
+			boolean txStatus = sc.hasNext(); 
+			
+			System.out.println("Enter transaction Arrears status (true or false) :");
+			boolean txArrears = sc.hasNext(); 
+			
+			Transaction ob = new Transaction(txI, d, txAmount, txStatus, txArrears);
+			
+			trnsCollecton.add(ob);
+			
+			loop++;
+		}
+		
+		for(Transaction data : trnsCollecton)
+		{
+			System.out.println(data);
+		}
+		
+
+	}
+
+}

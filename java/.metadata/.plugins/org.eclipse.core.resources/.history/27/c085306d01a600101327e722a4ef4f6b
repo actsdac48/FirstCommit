@@ -1,0 +1,15 @@
+package otherOnPreDefinedFunctionalInterface;
+
+import java.util.Arrays;
+
+public class FindLargedIntArray {
+
+	public static void main(String[] args) {
+		
+		int [] array = {23,345,456,12,235,578,234,67};
+		
+		Array<int> max = Arrays.stream(array).reduce((a, b) -> a > b ? a : b);			
+
+	}
+
+}

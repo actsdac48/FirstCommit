@@ -1,0 +1,239 @@
+dac@pc-48:~$ sudo mysql
+[sudo] password for dac: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.43-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| ass1               |
+| assign1            |
+| assignment1        |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use assignment1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-----------------------+
+| Tables_in_assignment1 |
++-----------------------+
+| customer              |
+| employee              |
+| salesman              |
+| vehicle               |
++-----------------------+
+4 rows in set (0.00 sec)
+
+mysql> select* from customer;
++--------+--------+----------+
+| custid | cname  | location |
++--------+--------+----------+
+|      2 | GANESH | Pune     |
+|      3 | Kishor | Kothrud  |
+|      4 | PRIYA  | aundh    |
+|      5 | GEETA  | PIMPRI   |
+|      6 | RAJ    | AUNDH    |
+|      7 | YASH   | AUNDH    |
++--------+--------+----------+
+6 rows in set (0.02 sec)
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q1. Delete customer from Pimpri area.
+
+
+mysql> delete from customer where location='pimpri';
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select* from customer;
++--------+--------+----------+
+| custid | cname  | location |
++--------+--------+----------+
+|      2 | GANESH | Pune     |
+|      3 | Kishor | Kothrud  |
+|      4 | PRIYA  | aundh    |
+|      6 | RAJ    | AUNDH    |
+|      7 | YASH   | AUNDH    |
++--------+--------+----------+
+5 rows in set (0.00 sec)
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q2. Delete customer from area Aundh whose name is Priya. 
+
+
+
+mysql> DELETE from customer where cname ='priya' AND location = "aundh";
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select* from customer;
++--------+--------+----------+
+| custid | cname  | location |
++--------+--------+----------+
+|      2 | GANESH | Pune     |
+|      3 | Kishor | Kothrud  |
+|      6 | RAJ    | AUNDH    |
+|      7 | YASH   | AUNDH    |
++--------+--------+----------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q3. Create a copy of table customer and salesman by name customer1 and salesman1
+
+
+mysql> create table customer1 select * from customer;
+Query OK, 4 rows affected (0.75 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer1;
++--------+--------+----------+
+| custid | cname  | location |
++--------+--------+----------+
+|      2 | GANESH | Pune     |
+|      3 | Kishor | Kothrud  |
+|      6 | RAJ    | AUNDH    |
+|      7 | YASH   | AUNDH    |
++--------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> create table salesman1 select * from salesman;
+Query OK, 4 rows affected (0.65 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from salesman1;
++------+----------+--------+------------+
+| sid  | sname    | city   | experience |
++------+----------+--------+------------+
+|   10 | RAJESH   | MUMBAI |          5 |
+|   11 | SEEMA    | PUNE   |          8 |
+|   12 | SHAILESH | NAGPUR |          7 |
+|   13 | RAKHI    | PUNE   |          2 |
++------+----------+--------+------------+
+4 rows in set (0.00 sec)
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q4. Delete entire table Salesman1.
+
+mysql> drop table salesman1;
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> select * from salesman1;
+ERROR 1146 (42S02): Table 'assignment1.salesman1' doesn't exist
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q5. Consider table employee(eno, ename,basic,incentives) and solve below
+
+
+mysql> select * from employee;
++------+--------+-------+-----------+
+| eno  | ename  | basic | incentive |
++------+--------+-------+-----------+
+|    1 | RAJESH | 20000 |      1500 |
+|    2 | SARITA | 25000 |      1000 |
+|    3 | MEERA  | 15750 |      3000 |
+|    4 | JITESH | 30000 |       500 |
+|    5 | RAMESH | 12600 |      3000 |
+|   20 | AJAY   | 16800 |      NULL |
++------+--------+-------+-----------+
+6 rows in set (0.02 sec)
+---------------------------------------------------------
+Q5.1 Ramesh is promoted as Head Clerk and now earns salary 60000. Write a query.    
+mysql> update employee set basic = 60000 where ename = "ramesh";
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++------+--------+-------+-----------+
+| eno  | ename  | basic | incentive |
++------+--------+-------+-----------+
+|    1 | RAJESH | 20000 |      1500 |
+|    2 | SARITA | 25000 |      1000 |
+|    3 | MEERA  | 15750 |      3000 |
+|    4 | JITESH | 30000 |       500 |
+|    5 | RAMESH | 60000 |      3000 |
+|   20 | AJAY   | 16800 |      NULL |
++------+--------+-------+-----------+
+6 rows in set (0.00 sec)
+
+
+
+
+---------------------------------------------------------
+Q5.2 Change incentive of Jitesh to 1000.
+
+mysql> update employee set incentive = 1000 where ename = "jitesh";
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++------+--------+-------+-----------+
+| eno  | ename  | basic | incentive |
++------+--------+-------+-----------+
+|    1 | RAJESH | 20000 |      1500 |
+|    2 | SARITA | 25000 |      1000 |
+|    3 | MEERA  | 15750 |      3000 |
+|    4 | JITESH | 30000 |      1000 |
+|    5 | RAMESH | 60000 |      3000 |
+|   20 | AJAY   | 16800 |      NULL |
++------+--------+-------+-----------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+---------------------------------------------------------
+Q5.3 Meera leaves the company. Make nacessary changes in the table.
+
+mysql> delete from employee where ename = "meera";
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from employee;
++------+--------+-------+-----------+
+| eno  | ename  | basic | incentive |
++------+--------+-------+-----------+
+|    1 | RAJESH | 20000 |      1500 |
+|    2 | SARITA | 25000 |      1000 |
+|    4 | JITESH | 30000 |      1000 |
+|    5 | RAMESH | 60000 |      3000 |
+|   20 | AJAY   | 16800 |      NULL |
++------+--------+-------+-----------+
+5 rows in set (0.00 sec)
+
+
+
+

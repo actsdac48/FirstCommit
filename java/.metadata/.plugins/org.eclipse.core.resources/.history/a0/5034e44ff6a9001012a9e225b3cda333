@@ -1,0 +1,30 @@
+package libearymanagement;
+
+import java.io.FileReader;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Library {
+
+	public static void main(String [] args) {
+		
+		Map<String, Book> books = new HashMap<>();
+		Map<String, Member> members = new HashMap<>();
+		
+		// Adding books to the map (using ISBN as key)
+		books.put("978-0134685991", new Book("978041", "The Martian", "Andy Weir", Genre.SCIENCE,false));
+		books.put("978-0201633610", new Book("9783573", "The Fellowship of the Ring", "J.R.R. Tolkien", Genre.MYSTERY, false));
+		books.put("978-0451524935", new Book("978045", "1984", "George Orwell", Genre.SCIENCE, true));
+		books.put("978-0439708180", new Book("978043", "Harry Potter", "J.K. Rowling", Genre.FANTASY, false));
+		
+		
+		System.out.println("-------------All books-------------");
+		books.forEach((isbn, book) -> System.out.println(isbn + " : " + book));
+		
+	}
+	
+	 
+
+}

@@ -1,0 +1,677 @@
+Check data in both the tables.
+
+
+mysql> select * from trainer;
++-----+--------+------+--------+------------+
+| tid | tname  | cid  | salary | experience |
++-----+--------+------+--------+------------+
+| t1  | Amit   | c2   |  87364 |         11 |
+| t2  | Rajan  | c1   |  75664 |         12 |
+| t3  | Shruti | c2   |  20000 |         15 |
+| t4  | Arti   | c2   |  20000 |         15 |
+| t5  | Sameer | c3   |  20000 |         12 |
+| t6  | Sanjay | NULL |   8736 |         12 |
+| t7  | Soham  | NULL |   4536 |         27 |
++-----+--------+------+--------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from course;
++-----+----------------+-------+
+| cid | cname          | fees  |
++-----+----------------+-------+
+| c1  | core java      |  7000 |
+| c2  | Linux          |  8000 |
+| c3  | Data structure | 10000 |
+| c4  | Python         | 12000 |
+| c5  | Dot net        |  NULL |
++-----+----------------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+1.Try adding following data in the above table 
+   trainer table
+    (t2,'Mahesh',null,16000,12)
+    
+mysql> insert into trainer values ('t2','Mahesh',null,16000,12);
+ERROR 1062 (23000): Duplicate entry 't2' for key 'trainer.PRIMARY'
+
+
+
+    (t8,'Meena',c3,25000,11)
+
+
+mysql> insert into trainer values ('t8','Meena','c3',25000,11);
+Query OK, 1 row affected (0.09 sec)
+
+
+
+
+    (t9,null,c2,30000,10)
+    
+    
+mysql> insert into trainer values ('t9',null,'c2',30000,10);
+ERROR 1048 (23000): Column 'tname' cannot be null
+
+
+
+
+    (t10,'Soham',c2,35000,8)
+    
+    
+mysql> insert into trainer values ('t10','Soham','c2',35000,8);
+ERROR 3819 (HY000): Check constraint 'trainer_chk_1' is violated.
+
+
+
+
+
+    (t11,'Anil',c3,null,11)
+
+
+mysql> insert into trainer values ('t11','Anil','c3',null,11);
+Query OK, 1 row affected (0.10 sec)
+
+    
+ mysql> select * from trainer;
++-----+--------+------+--------+------------+
+| tid | tname  | cid  | salary | experience |
++-----+--------+------+--------+------------+
+| t1  | Amit   | c2   |  87364 |         11 |
+| t11 | Anil   | c3   |   NULL |         11 |
+| t2  | Rajan  | c1   |  75664 |         12 |
+| t3  | Shruti | c2   |  20000 |         15 |
+| t4  | Arti   | c2   |  20000 |         15 |
+| t5  | Sameer | c3   |  20000 |         12 |
+| t6  | Sanjay | NULL |   8736 |         12 |
+| t7  | Soham  | NULL |   4536 |         27 |
+| t8  | Meena  | c3   |  25000 |         11 |
++-----+--------+------+--------+------------+
+9 rows in set (0.00 sec)
+   
+    
+    
+    
+    
+    
+    
+2. Delete course c3 from course table
+
+
+mysql> delete from course where cid = 'c3';
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`assignment1`.`trainer`, CONSTRAINT `fk_cid` FOREIGN KEY (`cid`) REFERENCES `course` (`cid`))
+
+
+
+
+
+
+3. Update fees of course C5 to 10000 
+
+
+ysql> update course set fees=10000 where cid = 'c5';
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from course;
++-----+----------------+-------+
+| cid | cname          | fees  |
++-----+----------------+-------+
+| c1  | core java      |  7000 |
+| c2  | Linux          |  8000 |
+| c3  | Data structure | 10000 |
+| c4  | Python         | 12000 |
+| c5  | Dot net        | 10000 |
++-----+----------------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1. Display all empno,ename,deptno,sal,avg(sal),min(sal), max(sal)
+
+
+mysql> select empno, ename,deptno, sal, avg(sal)over(), min(sal)over(), max(sal) over()from EMP;
++-------+--------+--------+------+-------------------+----------------+-----------------+
+| empno | ename  | deptno | sal  | avg(sal)over()    | min(sal)over() | max(sal) over() |
++-------+--------+--------+------+-------------------+----------------+-----------------+
+|  7369 | SMITH  |     20 |  800 | 2073.214285714286 |            800 |            5000 |
+|  7499 | ALLEN  |     30 | 1600 | 2073.214285714286 |            800 |            5000 |
+|  7521 | WARD   |     30 | 1250 | 2073.214285714286 |            800 |            5000 |
+|  7566 | JONES  |     20 | 2975 | 2073.214285714286 |            800 |            5000 |
+|  7654 | MARTIN |     30 | 1250 | 2073.214285714286 |            800 |            5000 |
+|  7698 | BLAKE  |     30 | 2850 | 2073.214285714286 |            800 |            5000 |
+|  7782 | CLARK  |     10 | 2450 | 2073.214285714286 |            800 |            5000 |
+|  7788 | SCOTT  |     20 | 3000 | 2073.214285714286 |            800 |            5000 |
+|  7839 | KING   |     10 | 5000 | 2073.214285714286 |            800 |            5000 |
+|  7844 | TURNER |     30 | 1500 | 2073.214285714286 |            800 |            5000 |
+|  7876 | ADAMS  |     20 | 1100 | 2073.214285714286 |            800 |            5000 |
+|  7900 | JAMES  |     30 |  950 | 2073.214285714286 |            800 |            5000 |
+|  7902 | FORD   |     20 | 3000 | 2073.214285714286 |            800 |            5000 |
+|  7934 | MILLER |     10 | 1300 | 2073.214285714286 |            800 |            5000 |
++-------+--------+--------+------+-------------------+----------------+-----------------+
+14 rows in set (0.00 sec)
+
+
+
+
+
+
+
+Q2. Write a query to display maximum salary, minimum salary and average sal along with emp name and deptno  and dname for all departments.
+
+
+
+mysql> select empno, ename,deptno, sal, avg(sal)over(partition by deptno), min(sal)over(partition by
+deptno), max(sal) over(partition by deptno)from EMP;
++-------+--------+--------+------+-----------------------------------+-----------------------------------+------------------------------------+
+| empno | ename  | deptno | sal  | avg(sal)over(partition by deptno) | min(sal)over(partition by deptno) | max(sal) over(partition by deptno) |
++-------+--------+--------+------+-----------------------------------+-----------------------------------+------------------------------------+
+|  7782 | CLARK  |     10 | 2450 |                2916.6666666666665 |                              1300 |                               5000 |
+|  7839 | KING   |     10 | 5000 |                2916.6666666666665 |                              1300 |                               5000 |
+|  7934 | MILLER |     10 | 1300 |                2916.6666666666665 |                              1300 |                               5000 |
+|  7369 | SMITH  |     20 |  800 |                              2175 |                               800 |                               3000 |
+|  7566 | JONES  |     20 | 2975 |                              2175 |                               800 |                               3000 |
+|  7788 | SCOTT  |     20 | 3000 |                              2175 |                               800 |                               3000 |
+|  7876 | ADAMS  |     20 | 1100 |                              2175 |                               800 |                               3000 |
+|  7902 | FORD   |     20 | 3000 |                              2175 |                               800 |                               3000 |
+|  7499 | ALLEN  |     30 | 1600 |                1566.6666666666667 |                               950 |                               2850 |
+|  7521 | WARD   |     30 | 1250 |                1566.6666666666667 |                               950 |                               2850 |
+|  7654 | MARTIN |     30 | 1250 |                1566.6666666666667 |                               950 |                               2850 |
+|  7698 | BLAKE  |     30 | 2850 |                1566.6666666666667 |                               950 |                               2850 |
+|  7844 | TURNER |     30 | 1500 |                1566.6666666666667 |                               950 |                               2850 |
+|  7900 | JAMES  |     30 |  950 |                1566.6666666666667 |                               950 |                               2850 |
++-------+--------+--------+------+-----------------------------------+-----------------------------------+------------------------------------+
+14 rows in set (0.00 sec)
+
+
+
+
+
+
+
+3. Find sum of salary for all employees whose sal > 1000. Query should display ename,sal,Sum of salary, should be displayed according to the job.
+
+
+mysql> select ename, sal, job, sum(sal)over(partition by job) from EMP where sal>1000;
++--------+------+-----------+--------------------------------+
+| ename  | sal  | job       | sum(sal)over(partition by job) |
++--------+------+-----------+--------------------------------+
+| SCOTT  | 3000 | ANALYST   |                           6000 |
+| FORD   | 3000 | ANALYST   |                           6000 |
+| ADAMS  | 1100 | CLERK     |                           2400 |
+| MILLER | 1300 | CLERK     |                           2400 |
+| JONES  | 2975 | MANAGER   |                           8275 |
+| BLAKE  | 2850 | MANAGER   |                           8275 |
+| CLARK  | 2450 | MANAGER   |                           8275 |
+| KING   | 5000 | PRESIDENT |                           5000 |
+| ALLEN  | 1600 | SALESMAN  |                           5600 |
+| WARD   | 1250 | SALESMAN  |                           5600 |
+| MARTIN | 1250 | SALESMAN  |                           5600 |
+| TURNER | 1500 | SALESMAN  |                           5600 |
++--------+------+-----------+--------------------------------+
+12 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+4. Find number of clerks working in each department. Display ename,job and count of that job.
+
+
+mysql> select ename, job, count(job) over(partition by deptno) 'count' from EMP where job ='clerk';
++--------+-------+-------+
+| ename  | job   | count |
++--------+-------+-------+
+| MILLER | CLERK |     1 |
+| SMITH  | CLERK |     2 |
+| ADAMS  | CLERK |     2 |
+| JAMES  | CLERK |     1 |
++--------+-------+-------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+5. Find how many employees are working under same manager display mgr and the count 
+
+
+mysql> select empno,  ename, mgr, count(mgr) over(partition by empno) from EMP where job='manager';
++-------+-------+------+-------------------------------------+
+| empno | ename | mgr  | count(mgr) over(partition by empno) |
++-------+-------+------+-------------------------------------+
+|  7566 | JONES | 7839 |                                   1 |
+|  7698 | BLAKE | 7839 |                                   1 |
+|  7782 | CLARK | 7839 |                                   1 |
++-------+-------+------+-------------------------------------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+6. Calculate how many employees earn sal greater than 1500 in each dept. Query should display ename, sal, count of employees earning sal >1500. 
+
+
+mysql> select ename, deptno, sal, count(*) over(partition by deptno)from EMP where sal>1500;
++-------+--------+------+------------------------------------+
+| ename | deptno | sal  | count(*) over(partition by deptno) |
++-------+--------+------+------------------------------------+
+| CLARK |     10 | 2450 |                                  2 |
+| KING  |     10 | 5000 |                                  2 |
+| JONES |     20 | 2975 |                                  3 |
+| SCOTT |     20 | 3000 |                                  3 |
+| FORD  |     20 | 3000 |                                  3 |
+| ALLEN |     30 | 1600 |                                  2 |
+| BLAKE |     30 | 2850 |                                  2 |
++-------+--------+------+------------------------------------+
+7 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+7. Calculate the difference between max salary and minimum salary for depatno 20.  Query should display ename,sal, diff between max sal and employee's sal, diff between min sal and max sal of the dept.
+
+
+mysql> select ename, sal, max(sal) over() - min(sal) over() 'diff between min sal and max sal', max(sal) over()-sal 'diff between max sal and employees sal' from EMP where deptno=20;
++-------+------+----------------------------------+----------------------------------------+
+| ename | sal  | diff between min sal and max sal | diff between max sal and employees sal |
++-------+------+----------------------------------+----------------------------------------+
+| SMITH |  800 |                             2200 |                                   2200 |
+| JONES | 2975 |                             2200 |                                     25 |
+| SCOTT | 3000 |                             2200 |                                      0 |
+| ADAMS | 1100 |                             2200 |                                   1900 |
+| FORD  | 3000 |                             2200 |                                      0 |
++-------+------+----------------------------------+----------------------------------------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+1. Display all employees who earn sal more that Smith earns.
+
+
+mysql> select * from EMP where sal >(select sal from EMP where ename='smith');
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+13 rows in set (0.00 sec)
+
+
+
+
+
+
+
+2. Display all employees who are working in Smith's department.
+
+
+mysql> select * from EMP where deptno=(select deptno from EMP where ename='smith');
++-------+-------+---------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+---------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK   | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | JONES | MANAGER | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7788 | SCOTT | ANALYST | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7876 | ADAMS | CLERK   | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7902 | FORD  | ANALYST | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+3. Display all employees who earn salary < Scott and salary > Adams sal.
+
+
+mysql> select * from EMP where sal <(select sal from EMP where ename='scott') and sal >(select sal from EMP where ename='adams');
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER  | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER  | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+----------+------+------------+------+------+--------+
+8 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+4
+Display all employees with salary > either Ward's  salary or Blake's sal.
+
+
+mysql> select * from EMP where sal > (select sal from EMP where ename='ward') or sal> (select sal fro
+m EMP where ename='blake');
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+9 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+5. Display all employees who earn more than average sal of dept 10.
+
+
+mysql> select * from EMP where sal >(select avg(sal)from EMP where deptno=10);
++-------+-------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+-----------+------+------------+------+------+--------+
+|  7566 | JONES | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7788 | SCOTT | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+-------+-----------+------+------------+------+------+--------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+6. Display all employees who are working in research department.
+
+
+mysql> select * from EMP where deptno=(select deptno from DEPT where dname='research');
++-------+-------+---------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+---------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK   | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | JONES | MANAGER | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7788 | SCOTT | ANALYST | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7876 | ADAMS | CLERK   | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7902 | FORD  | ANALYST | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+7. Display   sum of salary  and min(sal) for all employees who are managers.
+
+mysql> select sum(sal), min(sal) from EMP where empno in (select empno from EMP where job='manager');
+
++----------+----------+
+| sum(sal) | min(sal) |
++----------+----------+
+|     8275 |     2450 |
++----------+----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+8. Create following tables and solve the  queries
+
+
+1. List all pid,pname,cid,cname  with category chips
+
+
+mysql> select p.pid, p.pname, c.cid, c.cname from product p, category c where p.cid in (select c.cid from category where c.cname = 'chips');
++-----+----------+-----+-------+
+| pid | pname    | cid | cname |
++-----+----------+-----+-------+
+| 123 | lays     |   1 | chips |
+| 125 | pringles |   1 | chips |
+| 134 | nachos   |   1 | chips |
++-----+----------+-----+-------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+2. Display all products sold by kirti
+
+
+mysql> select * from product p, salesman1 s  where p.sid in (select s.sid from salesman1 where s.sname='kirti');
++-----+--------+-------+------+------+------+-----+-------+--------+
+| pid | pname  | price | qty  | cid  | sid  | sid | sname | city   |
++-----+--------+-------+------+------+------+-----+-------+--------+
+| 123 | lays   | 30.00 |   30 |    1 |   12 |  12 | Kirti | Mumbai |
+| 134 | nachos | 50.00 |   50 |    1 |   12 |  12 | Kirti | Mumbai |
++-----+--------+-------+------+------+------+-----+-------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+3. List all products which belong to the category of lays and sold by Arnav. Consider product table
+
+
+mysql> select * from product p, salesman1 s, category c where  p.sid = s.sid and p.cid = c.cid and c.cid = (select cid from product where pname='lays') and s.sid=(select sid from salesman1 where sname='arnav');
++-----+----------+-------+------+------+------+-----+-------+----------+-----+-------+--------------+
+| pid | pname    | price | qty  | cid  | sid  | sid | sname | city     | cid | cname | description  |
++-----+----------+-------+------+------+------+-----+-------+----------+-----+-------+--------------+
+| 125 | pringles | 40.00 |   60 |    1 |   14 |  14 | Arnav | Amravati |   1 | chips | very crunchy |
++-----+----------+-------+------+------+------+-----+-------+----------+-----+-------+--------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+4. Display the count of employees working for the company.
+
+
+mysql> select count(*) from salesman1;
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+5. Display the count of products having price > 50
+
+
+mysql> select count(*) from product where price>50;
++----------+
+| count(*) |
++----------+
+|        3 |
++----------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+6. List all salesmen who stays in city where  name starts with P or N
+
+
+mysql> select * from salesman1 where regexp_like(sname, '^P|^N');
++-----+--------+--------+
+| sid | sname  | city   |
++-----+--------+--------+
+|  13 | Prasad | Nashik |
++-----+--------+--------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+7. List prodid,pname,price,qty,and salesman for salesman working in Mumbai location.
+
+
+mysql> select p.pid, p.pname, p.price, p.qty, s.sname from product p, salesman1 s where s.city='mumbai' and p.sid = s.sid;
++-----+--------+-------+------+-------+
+| pid | pname  | price | qty  | sname |
++-----+--------+-------+------+-------+
+| 123 | lays   | 30.00 |   30 | Kirti |
+| 134 | nachos | 50.00 |   50 | Kirti |
++-----+--------+-------+------+-------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+=---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select * from product;
++-----+-------------+-------+------+------+------+
+| pid | pname       | price | qty  | cid  | sid  |
++-----+-------------+-------+------+------+------+
+| 111 | pepsi       | 40.00 |   50 |    4 |   11 |
+| 123 | lays        | 30.00 |   30 |    1 |   12 |
+| 124 | dairy milk  | 40.00 |   60 |    2 |   14 |
+| 125 | pringles    | 40.00 |   60 |    1 |   14 |
+| 134 | nachos      | 50.00 |   50 |    1 |   12 |
+| 167 | eraser      | 90.00 |    5 | NULL | NULL |
+| 213 | Sketch Pens | 56.00 |  150 | NULL |   11 |
++-----+-------------+-------+------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from salesman1;
++-----+--------+----------+
+| sid | sname  | city     |
++-----+--------+----------+
+|  11 | Rahul  | Pune     |
+|  12 | Kirti  | Mumbai   |
+|  13 | Prasad | Nashik   |
+|  14 | Arnav  | Amravati |
++-----+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from category;
++-----+-------------+-------------------------+
+| cid | cname       | description             |
++-----+-------------+-------------------------+
+|   1 | chips       | very crunchy            |
+|   2 | chocolate   | very chocolaty          |
+|   3 | snacks      | yummy                   |
+|   4 | cold drinks | thanda thanda cool cool |
++-----+-------------+-------------------------+
+4 rows in set (0.00 sec)

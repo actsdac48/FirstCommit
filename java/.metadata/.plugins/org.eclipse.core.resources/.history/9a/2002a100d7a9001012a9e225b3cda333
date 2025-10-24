@@ -1,0 +1,120 @@
+package employeemanagement;
+
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+import employee.Employee;
+
+public class Entry {
+
+	private static int count = 0;
+	public static void main(String[] args) {
+		
+		LinkedList<Employee> objEmployee = new LinkedList<>();
+		
+		Scanner sc = new Scanner(System.in);
+		
+		
+		int choice;
+		do {
+			System.out.println("1. Add\n 2. display all\n 3. desplay employee by department\n4. display count by department\n 5. sort employee by date ");
+			choice = sc.nextInt();
+			
+			switch(choice) {
+			case 1 : {
+				EmployeeData data = inputData();
+				objEmployee.add(new Manager(data.empId, data.name, data.dept, data.joiningDate));
+			}break;
+			
+			case 2 : {
+				try {
+					//save to file
+					ObjectOutputStream objFile = new ObjectOutputStream(new FileOutputStream("text.txt"));
+					
+					for(Employee data : objEmployee)
+						objFile.writeObject(data);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}break;
+			
+			}
+			
+			
+		}while(choice < 6);
+
+	}
+	
+	public static EmployeeData inputData () {
+		
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.print("Enter EmpId : ");
+		int empId = scanner.nextInt();
+		
+		System.out.print("Enter name : ");
+		String name = scanner.next();
+
+		System.out.print("Enter Department : ");
+		String dept = scanner.next();
+
+		System.out.print("Enter Date of joining (DD/MM/YYYY): ");
+		String joiningDateinp = scanner.next();
+		String format = "dd/mm/yyyy";
+		boolean datereturn = isValidDate(joiningDateinp, format);
+		LocalDate joiningDate = LocalDate.now();
+		if(datereturn) {
+			joiningDate = LocalDate.parse(joiningDateinp);
+		}
+		
+		
+		return new EmployeeData(empId, name, dept, joiningDate);
+
+	}
+
+
+	private static class EmployeeData {
+		int empId;
+		String name;
+		String dept;
+		LocalDate joiningDate;
+		
+		public EmployeeData(int empId, String name, String dept, LocalDate joiningDate) {
+			super();
+			this.empId = empId;
+			this.name = name;
+			this.dept = dept;
+			this.joiningDate = joiningDate;
+		}
+	
+		
+	}
+	
+	
+	//date validation
+	public static boolean isValidDate(String dateString, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        sdf.setLenient(false); // Crucial for strict validation
+        try {
+            sdf.parse(dateString);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+
+	
+	
+	
+
+}

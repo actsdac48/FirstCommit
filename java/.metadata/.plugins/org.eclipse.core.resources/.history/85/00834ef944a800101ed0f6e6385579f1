@@ -1,0 +1,53 @@
+package generateotp;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+public class Entry {
+
+    public static void main(String[] args) throws InterruptedException {
+        // Use a thread-safe BlockingQueue instead of a non-thread-safe LinkedList
+        BlockingQueue<String> otpQueue = new LinkedBlockingQueue<>();
+        
+        int numProducers = 500;
+        int numConsumers = 40;
+
+        // Producer threads
+        for (int i = 0; i < numProducers; i++) {
+            new Thread(() -> {
+                try {
+                    String otp = generateOtp();
+                    otpQueue.put(otp); // .put() safely adds to the queue, blocking if full
+                    System.out.println("OTP produced: " + otp);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
+        }
+
+        // Wait a moment for producers to start
+        Thread.sleep(100);
+
+        // Consumer threads
+        for (int i = 0; i < numConsumers; i++) {
+            new Thread(() -> {
+                try {
+                    String otp = otpQueue.take(); // .take() safely removes from the queue, blocking if empty
+                    System.out.println("OTP consumed: " + otp);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
+        }
+    }
+
+    private static String generateOtp() {
+        StringBuilder sum = new StringBuilder();
+        int idx = 3;
+        while (idx > 0) {
+            sum.append((int) (Math.random() * 9));
+            idx--;
+        }
+        return sum.toString();
+    }
+}

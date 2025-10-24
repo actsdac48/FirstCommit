@@ -1,0 +1,8 @@
+package examque;
+
+public class InputHandler {
+
+	public static void addNewTask() {
+
+	}
+}

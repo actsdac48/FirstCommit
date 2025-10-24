@@ -1,0 +1,8 @@
+package classcode;
+
+public class Increament extends Thread {
+
+	public void run() {
+		System.out.println("Run in Thread---------");
+	}
+}

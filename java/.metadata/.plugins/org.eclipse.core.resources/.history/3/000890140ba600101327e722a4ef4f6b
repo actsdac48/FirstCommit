@@ -1,0 +1,11 @@
+package otherOnPreDefinedFunctionalInterface;
+
+public class PrintCurrentDate {
+
+	public static void main(String[] args) {
+		
+		predicate<int> num = () -> System.out.println(CurrentDateTime());
+
+	}
+
+}

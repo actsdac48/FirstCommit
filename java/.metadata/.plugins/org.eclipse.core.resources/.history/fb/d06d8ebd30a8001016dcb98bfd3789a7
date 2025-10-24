@@ -1,0 +1,19 @@
+package classcode;
+
+public class Entry {
+
+	public static void main(String[] args) {
+		
+		Increament incThread = new Increament();
+		
+		incThread.start();
+		incThread.setDaemon(true);
+		
+		Decrement decThread = new Decrement();
+		
+		decThread.run();
+		
+
+	}
+
+}

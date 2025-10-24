@@ -1,0 +1,33 @@
+package reflectionexample;
+
+import java.lang.annotation.Annotation;
+import java.util.Scanner;
+
+public class Entry {
+
+	public static void main(String[] args) {
+	
+		try (Scanner sc = new Scanner(System.in)){
+			System.out.println("Enter Classs name : ");
+			String className = sc.next();
+			
+			Class<?> fetchclass = Class.forName(className);
+			
+			Annotation[] annot = fetchclass.getAnnotations();
+			
+			for(Annotation ob : annot)
+				System.out.println(ob.toString());
+			System.out.println("exit");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+
+	}
+
+}

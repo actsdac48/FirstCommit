@@ -1,0 +1,16 @@
+package transaction;
+
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+public class Entry {
+
+	public static void main(String[] args) {
+		LocalDateTime d = LocalDateTime.now();
+		Transaction ob1 = new Transaction(1, d, 200.0f, true, true);
+				
+
+	}
+
+}

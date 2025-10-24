@@ -1,0 +1,11 @@
+package ThreadwithGUI;
+
+public class BounceRect implements Runnable {
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,5 @@
+package examque;
+
+public enum Tasks {
+
+}

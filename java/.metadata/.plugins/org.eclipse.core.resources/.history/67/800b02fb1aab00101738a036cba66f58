@@ -1,0 +1,6 @@
+
+public enum tasks {
+	COMPLETED,
+	IN_PROGRESS,
+	PENDING
+}

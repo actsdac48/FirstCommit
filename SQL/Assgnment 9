@@ -1,0 +1,777 @@
+ Q1.  Create a view emp_view having following columns
+empno,ename,deptno,sal, comm
+
+
+mysql> create view emp_view as select empno,ename,deptno,sal, comm from EMP;
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> select * from emp_view;
++-------+--------+--------+------+------+
+| empno | ename  | deptno | sal  | comm |
++-------+--------+--------+------+------+
+|  7369 | SMITH  |     20 |  800 | NULL |
+|  7499 | ALLEN  |     30 | 1600 |  300 |
+|  7521 | WARD   |     30 | 1250 |  500 |
+|  7566 | JONES  |     20 | 2975 | NULL |
+|  7654 | MARTIN |     30 | 1250 | 1400 |
+|  7698 | BLAKE  |     30 | 2850 | NULL |
+|  7782 | CLARK  |     10 | 2450 | NULL |
+|  7788 | SCOTT  |     20 | 3000 | NULL |
+|  7839 | KING   |     10 | 5000 | NULL |
+|  7844 | TURNER |     30 | 1500 |    0 |
+|  7876 | ADAMS  |     20 | 1100 | NULL |
+|  7900 | JAMES  |     30 |  950 | NULL |
+|  7902 | FORD   |     20 | 3000 | NULL |
+|  7934 | MILLER |     10 | 1300 | NULL |
+|  3746 | NULL   |     80 | NULL | NULL |
+|  7864 | NULL   |   NULL | NULL | NULL |
++-------+--------+--------+------+------+
+16 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+ ------------------------------------------------------------------------------------------------------------------------------------
+Q2.  Insert new employee having following information in the view
+(1111,'Geeta',20,10000,300)
+check the data inserted in the view as well as the base table.
+
+
+
+mysql> insert into emp_view values(1111,'Geeta',20,10000,300) ;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from emp_view;
++-------+--------+--------+-------+------+
+| empno | ename  | deptno | sal   | comm |
++-------+--------+--------+-------+------+
+|  7369 | SMITH  |     20 |   800 | NULL |
+|  7499 | ALLEN  |     30 |  1600 |  300 |
+|  7521 | WARD   |     30 |  1250 |  500 |
+|  7566 | JONES  |     20 |  2975 | NULL |
+|  7654 | MARTIN |     30 |  1250 | 1400 |
+|  7698 | BLAKE  |     30 |  2850 | NULL |
+|  7782 | CLARK  |     10 |  2450 | NULL |
+|  7788 | SCOTT  |     20 |  3000 | NULL |
+|  7839 | KING   |     10 |  5000 | NULL |
+|  7844 | TURNER |     30 |  1500 |    0 |
+|  7876 | ADAMS  |     20 |  1100 | NULL |
+|  7900 | JAMES  |     30 |   950 | NULL |
+|  7902 | FORD   |     20 |  3000 | NULL |
+|  7934 | MILLER |     10 |  1300 | NULL |
+|  3746 | NULL   |     80 |  NULL | NULL |
+|  7864 | NULL   |   NULL |  NULL | NULL |
+|  1111 | Geeta  |     20 | 10000 |  300 |
++-------+--------+--------+-------+------+
+17 rows in set (0.00 sec)
+
+mysql> select * from EMP;
++-------+--------+-----------+------+------------+-------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL   | COMM | DEPTNO |
++-------+--------+-----------+------+------------+-------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |   800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 |  1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 |  1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 |  2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 |  1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 |  2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 |  2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 |  3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 |  5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 |  1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 |  1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |   950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 |  3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 |  1300 | NULL |     10 |
+|  3746 | NULL   | NULL      | NULL | NULL       |  NULL | NULL |     80 |
+|  7864 | NULL   | NULL      | NULL | NULL       |  NULL | NULL |   NULL |
+|  1111 | Geeta  | NULL      | NULL | NULL       | 10000 |  300 |     20 |
++-------+--------+-----------+------+------------+-------+------+--------+
+17 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+ ------------------------------------------------------------------------------------------------------------------------------------
+Q3. Create a view for deptno 20 as emp_v20 having following cloumns. This view should contain rows from dept20 only.
+empno,ename,deptno,job.
+
+
+
+
+mysql> create view emp_v20 as select empno,ename,deptno,job from EMP where deptno=20;
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> select * from emp_v20;
++-------+-------+--------+---------+
+| empno | ename | deptno | job     |
++-------+-------+--------+---------+
+|  7369 | SMITH |     20 | CLERK   |
+|  7566 | JONES |     20 | MANAGER |
+|  7788 | SCOTT |     20 | ANALYST |
+|  7876 | ADAMS |     20 | CLERK   |
+|  7902 | FORD  |     20 | ANALYST |
+|  1111 | Geeta |     20 | NULL    |
++-------+-------+--------+---------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+ ------------------------------------------------------------------------------------------------------------------------------------
+Q4. Insert new employee  in view emp_v20 having following information
+(2222,'Raj',40,'Analyst') 
+check the data inserted in the base table emp and also in the view.
+
+
+
+
+
+mysql> insert into emp_v20 values(2222,'Raj',40,'Analyst') ;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from emp_v20;
++-------+-------+--------+---------+
+| empno | ename | deptno | job     |
++-------+-------+--------+---------+
+|  7369 | SMITH |     20 | CLERK   |
+|  7566 | JONES |     20 | MANAGER |
+|  7788 | SCOTT |     20 | ANALYST |
+|  7876 | ADAMS |     20 | CLERK   |
+|  7902 | FORD  |     20 | ANALYST |
+|  1111 | Geeta |     20 | NULL    |
++-------+-------+--------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from EMP;
++-------+--------+-----------+------+------------+-------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL   | COMM | DEPTNO |
++-------+--------+-----------+------+------------+-------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |   800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 |  1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 |  1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 |  2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 |  1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 |  2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 |  2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 |  3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 |  5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 |  1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 |  1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |   950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 |  3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 |  1300 | NULL |     10 |
+|  3746 | NULL   | NULL      | NULL | NULL       |  NULL | NULL |     80 |
+|  7864 | NULL   | NULL      | NULL | NULL       |  NULL | NULL |   NULL |
+|  1111 | Geeta  | NULL      | NULL | NULL       | 10000 |  300 |     20 |
+|  2222 | Raj    | Analyst   | NULL | NULL       |  NULL | NULL |     40 |
++-------+--------+-----------+------+------------+-------+------+--------+
+18 rows in set (0.00 sec)
+
+
+
+
+
+
+
+ ------------------------------------------------------------------------------------------------------------------------------------
+Q5. Create a view for deptno 20 as new_emp_v20 having following cloumns
+empno,ename,deptno,job with constraint 'check option' .
+
+
+
+mysql> create view new_emp_v20 as select empno,ename,deptno,job from EMP where deptno=20 with check option;
+Query OK, 0 rows affected (0.26 sec)
+
+mysql> desc new_emp_v20;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| empno  | int unsigned | NO   |     | NULL    |       |
+| ename  | varchar(10)  | YES  |     | NULL    |       |
+| deptno | int unsigned | YES  |     | NULL    |       |
+| job    | varchar(9)   | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+
+ ------------------------------------------------------------------------------------------------------------------------------------
+Q6.  Insert below data in new_emp_v20 having following information
+(2222,'Raj',40,'Analyst')
+check the data inserted in the base table emp and also in the view.
+
+
+
+
+mysql> insert into new_emp_v20 values(2222,'Raj',40,'Analyst') ;
+ERROR 1369 (HY000): CHECK OPTION failed 'assignment1.new_emp_v20'
+
+
+
+
+
+   ------------------------------------------------------------------------------------------------------------------------------------
+Q7. Check all  created views.
+
+
+mysql> show full tables;
++-----------------------+------------+
+| Tables_in_assignment1 | Table_type |
++-----------------------+------------+
+| BONUS                 | BASE TABLE |
+| Courses               | BASE TABLE |
+| DEPT                  | BASE TABLE |
+| DUMMY                 | BASE TABLE |
+| EMP                   | BASE TABLE |
+| Product               | BASE TABLE |
+| SALGRADE              | BASE TABLE |
+| category              | BASE TABLE |
+| course                | BASE TABLE |
+| customer              | BASE TABLE |
+| customer1             | BASE TABLE |
+| dept1                 | BASE TABLE |
+| dept10                | BASE TABLE |
+| emp1                  | BASE TABLE |
+| emp10                 | BASE TABLE |
+| emp_v20               | VIEW       |
+| emp_view              | VIEW       |
+| employee              | BASE TABLE |
+| faculty               | BASE TABLE |
+| increment             | BASE TABLE |
+| new_emp_v20           | VIEW       |
+| room                  | BASE TABLE |
+| salesman              | BASE TABLE |
+| salesman1             | BASE TABLE |
+| t1                    | BASE TABLE |
+| t2                    | BASE TABLE |
+| trainer               | BASE TABLE |
+| vehicle               | BASE TABLE |
++-----------------------+------------+
+28 rows in set (0.00 sec)
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q8. Create a view with columns as 
+empno,ename, deptno and dname.
+Check if you can enter the data in the above view.
+
+
+
+mysql> create view v1 as Select e.empno,e.ename ,e.deptno,d.dname from EMP e join DEPT d on d.deptno=e.deptno;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> select * from v1;
++-------+--------+--------+------------+
+| empno | ename  | deptno | dname      |
++-------+--------+--------+------------+
+|  7369 | SMITH  |     20 | RESEARCH   |
+|  7499 | ALLEN  |     30 | SALES      |
+|  7521 | WARD   |     30 | SALES      |
+|  7566 | JONES  |     20 | RESEARCH   |
+|  7654 | MARTIN |     30 | SALES      |
+|  7698 | BLAKE  |     30 | SALES      |
+|  7782 | CLARK  |     10 | ACCOUNTING |
+|  7788 | SCOTT  |     20 | RESEARCH   |
+|  7839 | KING   |     10 | ACCOUNTING |
+|  7844 | TURNER |     30 | SALES      |
+|  7876 | ADAMS  |     20 | RESEARCH   |
+|  7900 | JAMES  |     30 | SALES      |
+|  7902 | FORD   |     20 | RESEARCH   |
+|  7934 | MILLER |     10 | ACCOUNTING |
+|  1111 | Geeta  |     20 | RESEARCH   |
++-------+--------+--------+------------+
+15 rows in set (0.00 sec)
+  
+  
+  
+  
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q9. Create index on any table and check the indexes using proper command.
+
+
+
+
+mysql> create index idx_empno on EMP(empno);
+Query OK, 0 rows affected (0.74 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create index idx_ename on EMP(ename);
+Query OK, 0 rows affected (0.45 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create index idx_hiredate on EMP(hiredate);
+Query OK, 0 rows affected (0.45 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create index idx_sal on EMP(sal);
+Query OK, 0 rows affected (0.69 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show indexes from EMP;
++-------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table | Non_unique | Key_name     | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| EMP   |          1 | idx_empno    |            1 | EMPNO       | A         |          17 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| EMP   |          1 | idx_ename    |            1 | ENAME       | A         |          16 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| EMP   |          1 | idx_hiredate |            1 | HIREDATE    | A         |          14 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| EMP   |          1 | idx_sal      |            1 | SAL         | A         |          14 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++-------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+4 rows in set (0.25 sec)
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+                                         #Stored procedures#
+                                         
+                                         
+------------------------------------------------------------------------------------------------------------------------------------
+Q1. Write a stored procedure which will find avg of all the salaries in the table. Display avg sal inside  the procedure.
+
+
+
+mysql> delimiter // 
+mysql> create procedure find_avg()
+    -> begin 
+    -> select avg(sal) from EMP;
+    -> end //
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> delimiter ;
+mysql> call find_avg;
++--------------------+
+| avg(sal)           |
++--------------------+
+| 2601.6666666666665 |
++--------------------+
+1 row in set (0.01 sec)
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q2. Write a stored procedure which will find avg salary of dept no 20. Display  avg salary out of the procedure.
+
+
+
+
+mysql> delimiter //
+mysql> create procedure find_avg20()
+    -> begin
+    -> select avg(sal) from EMP where deptno=20;
+    -> end //
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> delimiter ;
+mysql> call find_avg20;
++--------------------+
+| avg(sal)           |
++--------------------+
+| 3479.1666666666665 |
++--------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q3. Write a stored procedure which will find avg salary for any deptno passed to it.  Pass deptno as IN  parameter and avg(sal) as out parameter.  
+
+
+
+
+mysql> create procedure display1(inout a int)
+    -> begin
+    -> select avg(sal) into a 
+    -> from EMP 
+    -> where deptno=a ;  
+    -> end##
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> set @x=20##
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call display1(@x)##
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @x##
++------+
+| @x   |
++------+
+| 3479 |
++------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q4. Write a procedure to calculate total salary of an employee. Pass empno as a IN parameter to to procedure. 
+Total sal = sal +comm.
+
+
+delimeter $$
+create procedure total_sal1(in a int)
+begin
+	declare b, c, t int;
+	select sal into b from EMP
+	where empno=a;
+	
+	select comm into c from EMP
+	where empno=a;
+	
+	set t=b+ ifnull(c, 0);
+	
+	select t;
+end$$
+delimeter ;
+ 
+
+mysql> create procedure total_sal1(in a int)
+    -> begin
+    -> declare b, c, t int;
+    -> select sal into b from EMP
+    -> where empno=a;
+    -> 
+    -> select comm into c from EMP
+    -> where empno=a;
+    -> 
+    -> set t=b+ ifnull(c, 0);
+    -> 
+    -> select t;
+    -> end$$
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> call total_sal1(@s)$$
++------+
+| t    |
++------+
+|  800 |
++------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set @w=7521$$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call total_sal1(@w)$$
++------+
+| t    |
++------+
+| 1750 |
++------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q5. Pass any number to the procedure and check if it is a perfect number. If the number is perfect, procedure should set value of out parameter as 1 otherwise as 0.   
+
+
+create procedure perfect(a int)
+begin
+	declare sum int default 0;
+	declare i int default 1;
+	declare is_perfect int default 0;
+
+		while i < a
+		do
+		     if a%i=0
+		     then
+		         set sum=sum+i;
+		     end if;
+		         set i=i+1;
+		     
+		end while;
+		if sum=a
+		then 
+			set is_perfect=1;
+			select is_perfect;
+			
+		else
+			select is_perfect;
+		end if;
+end$$
+
+
+mysql> create procedure perfect(a int) begin declare sum int default 0; declare i int default 1; declare is_perfect int default 0; while i < a do if a%i=0  then  set sum=sum+i; end if; set i=i+1; end while; if sum=a then  set is_perfect=1; select is_perfect; else select is_perfect; end if; end$$
+Query OK, 0 rows affected (0.12 sec)
+
+
+mysql> delimiter ;
+mysql> set @a=6;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call perfect(@a);
++------------+
+| is_perfect |
++------------+
+|          1 |
++------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set @a=10;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call perfect(@a);
++------------+
+| is_perfect |
++------------+
+|          0 |
++------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set @a=26;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call perfect(@a);
++------------+
+| is_perfect |
++------------+
+|          0 |
++------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set @a=28;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call perfect(@a);
++------------+
+| is_perfect |
++------------+
+|          1 |
++------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q6. Pass empno as a in parameter to the procedure. If empno is found in the table then, display corrosponding salary out of the procedure. If empno is not found in the table then, display 0 out of the parameter.    
+
+
+create procedure is_found(a int)
+begin
+
+	declare b int;
+	declare isfound int default 0;
+	select empno into b 
+	from EMP 
+	where empno = a;
+		if b=a
+		then 
+			set isfound=1;
+			select isfound;
+			
+		else
+			select isfound;
+		end if;
+end$$
+
+
+
+
+mysql> create procedure is_found(a int) begin declare b int; declare isfound int default 0; select empno into b  from EMP  where empno = a; if b=a then  set isfound=1; select isfound; else select isfound; end if; end$$
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> select * from EMP$$
++-------+--------+-----------+------+------------+-------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL   | COMM | DEPTNO |
++-------+--------+-----------+------+------------+-------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |   800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 |  1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 |  1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 |  2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 |  1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 |  2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 |  2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 |  3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 |  5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 |  1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 |  1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |   950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 |  3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 |  1300 | NULL |     10 |
+|  3746 | NULL   | NULL      | NULL | NULL       |  NULL | NULL |     80 |
+|  7864 | NULL   | NULL      | NULL | NULL       |  NULL | NULL |   NULL |
+|  1111 | Geeta  | NULL      | NULL | NULL       | 10000 |  300 |     20 |
++-------+--------+-----------+------+------------+-------+------+--------+
+17 rows in set (0.00 sec)
+
+mysql> set @a=7788$$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call is_found(@a)$$
++---------+
+| isfound |
++---------+
+|       1 |
++---------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set @a=7999$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call is_found(@a)$$
++---------+
+| isfound |
++---------+
+|       0 |
++---------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Q7
+Write procedure 'prime' which will check if number passed to the procedure is prime. Procedure should display 1 if prime or 0 if nit prime. Use out parameter to display value out of the procedure and in parameter to pass value to the procedure.
+
+
+
+delimiter $$
+create procedure prime1(p_a int, out p_isprime int)
+begin
+	declare v_i int default 2;
+	set p_isprime = 1;
+	if p_a<= 1 
+	then
+		set p_isprime =0;
+	else
+	while v_i<p_a 
+	do
+		select "Hello" ;
+	    set v_i = v_i+1;
+	end while;
+	end if;
+end $$
+delimiter ;
+
+
+delimiter $$
+create procedure prime1(p_a int, out p_isprime int)
+begin
+	declare v_i int default 2;
+	set p_isprime = 1;
+	if p_a<= 1 then
+		set p_isprime =0;
+	else
+	while v_i<p_a do
+		if p_a%v_i=0
+		then
+			set p_isprime=0;
+			break ;
+			
+		else	
+			set p_isprime=1;
+		end if;
+	    set v_i = v_i+1;
+	end while;
+	end if;
+end $$
+delimiter ;
+
+
+create procedure prime1(a int, out isprime int) begin declare i int default 2; set isprime = 1; if a<= 1 then set isprime =0; else while i<a do if a%i=0 then set isprime=0; leave; else set isprime=1; end if; set i = i+1; end while; end if; end$$
+
+
+create procedure prime(a int) begin declare i int default 2; declare isprime int default 1; while i<a if a%i=0 then set isprime=0; select isprime; else select isprime; end if; end$$
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+Mixed Queries
+1
+The HR department wants to know the names of all the employees who were hired after Blake. Create a query to display the name and hire date of any employee hired after employee  Blake.
+2
+ Write a query to get  year, and number of employees joined each year.
+3
+Write a query to display all employees with experience more than 43 years.
+4
+Display 3rd highest salary.
+5
+Write a query which will display all employees working in sales department.
+6
+Write a query to display year if more than 2 employees are hired in that year.
+
+
+

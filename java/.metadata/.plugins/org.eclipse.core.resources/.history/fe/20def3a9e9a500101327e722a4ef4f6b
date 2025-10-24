@@ -1,0 +1,11 @@
+package transaction;
+
+public interface stringManipulation<P, R> {
+	
+	public int txId;
+	txDate LocalDate
+	txAmount float
+	txStatus boolean
+	txArrears boolean
+
+}

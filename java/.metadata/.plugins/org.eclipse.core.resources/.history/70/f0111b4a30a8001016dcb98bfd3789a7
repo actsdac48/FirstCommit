@@ -1,0 +1,16 @@
+package classcode;
+
+public class Decrement implements Runnable {
+
+	@Override
+	public void run() {
+
+
+		while(true) {
+			System.out.println("Run in Decrement----------");
+			
+		}
+		
+	}
+
+}

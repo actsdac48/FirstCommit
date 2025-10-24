@@ -1,0 +1,50 @@
+package examque;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class InputHandler {
+
+//	public static void addNewTask() {
+//
+//	}
+	static Scanner sc = new Scanner(System.in);
+	public static void addNewTask(ArrayList<Task> taskArr) {
+
+		System.out.println("Enter employee name:");
+		String employeeName = sc.nextLine();
+		System.out.println("Enter task title:");
+		String taskTitle = sc.nextLine();
+
+		System.out.println("Enter task description:");
+		String taskDescription = sc.nextLine();
+
+		System.out.println("Enter task status (COMPLETED, IN_PROGRESS, PENDING):");
+		String statusInput = sc.nextLine().toUpperCase();
+
+		System.out.println("Enter assigned date (yyyy-mm-dd):");
+		String dateInput = sc.nextLine();
+		
+		
+		Tasks taskStatus = Tasks.valueOf(statusInput);
+		java.util.Date assignedDate = java.sql.Date.valueOf(dateInput);
+		Task newTask = new Task(employeeName, taskTitle, taskDescription, taskStatus, assignedDate);
+		taskArr.add(newTask);
+		
+	}
+
+	public static void displayTasksByEmployee(ArrayList<Task> taskArr) {
+		
+		System.out.println("Enter employee name to display tasks:");
+		String employeeName = sc.nextLine();
+		for (Task task : taskArr) {
+			if (task.getEmployeeName().equalsIgnoreCase(employeeName)) {
+				System.out.println(task);
+			}
+		}
+		
+		
+	}
+
+	
+}

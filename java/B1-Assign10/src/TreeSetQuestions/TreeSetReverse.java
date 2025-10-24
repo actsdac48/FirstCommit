@@ -1,0 +1,25 @@
+package TreeSetQuestions;
+
+import java.util.TreeSet;
+
+public class TreeSetReverse {
+
+	public static void main(String[] args) {
+		TreeSet<String> tree = new TreeSet<>();
+
+		tree.add("BMW");
+		tree.add("Volvo");
+		tree.add("I20");
+		tree.add("Ford");
+
+		System.out.println("Original treeSet : " + tree);
+		
+		TreeSet<String> treeCopy = new TreeSet<>();
+		
+		treeCopy.addAll(tree);
+		
+		System.out.println("After Copy treeSet : " + treeCopy);
+
+	}
+
+}

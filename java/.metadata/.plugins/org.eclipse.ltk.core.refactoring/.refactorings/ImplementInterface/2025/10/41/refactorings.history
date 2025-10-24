@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Entry.java&apos; to &apos;secondQue.LinkedList.java&apos;&#x0D;&#x0A;- Original project: &apos;ImplementInterface&apos;&#x0D;&#x0A;- Destination element: &apos;secondQue.LinkedList.java&apos;&#x0D;&#x0A;- Original element: &apos;interface_.Entry.java&apos;" description="Copy compilation unit" destination="=ListWithIterator/src&lt;secondQue{LinkedList.java" element1="/src&lt;interface_{Entry.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1759759595720" units="1" version="1.0"/>
+</session>

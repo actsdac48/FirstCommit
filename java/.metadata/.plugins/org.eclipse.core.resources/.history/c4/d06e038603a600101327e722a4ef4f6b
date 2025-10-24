@@ -1,0 +1,18 @@
+package otherOnPreDefinedFunctionalInterface;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+public class SmallestNumInArray {
+
+	public static void main(String[] args) {
+		
+		Integer [] array = {23,345,456,12,235,578,234,67};
+		
+		Optional<Integer> min = Arrays.stream(array).reduce((a, b) ->  a < b ? a : b);
+		
+		System.out.println(min);
+
+	}
+
+}

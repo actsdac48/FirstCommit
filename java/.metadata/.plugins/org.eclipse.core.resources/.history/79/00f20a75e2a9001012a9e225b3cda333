@@ -1,0 +1,5 @@
+package libearymanagement;
+
+public enum Genre {
+
+}

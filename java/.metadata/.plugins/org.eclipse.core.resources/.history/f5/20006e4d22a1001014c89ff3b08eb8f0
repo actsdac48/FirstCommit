@@ -1,0 +1,12 @@
+package org.cdac.utils;
+
+public class Node {
+
+	Node previous;
+	
+	Node next;
+	
+	String Data;
+	
+	
+}

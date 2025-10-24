@@ -1,0 +1,30 @@
+package ThreadwithGUI;
+
+import java.awt.Button;
+import java.awt.Frame;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class MainFrame extends Frame{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	boolean runningStatus = true;
+	Object dummy = new Object();
+	
+	Thread refRectThread;
+	
+	ExecutorService executer = Executors.newSingleThreadExecutor();
+	ExecutorService some = Executors.newScheduledThreadPool(5);
+	
+	public MainFrame() {
+		setLayout(null);
+		Button buttonStart = new Button("Start");
+		buttonStart.setBounds(400, 50, 60, 20);
+		buttonStart.addActionListener(new ButtonHandler());;
+		add(buttonStart);
+	}
+}

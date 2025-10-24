@@ -1,0 +1,63 @@
+package reflectionexample;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.util.Scanner;
+
+public class Entry {
+
+	public static void main(String[] args) {
+	
+		
+		Class className = null;
+		
+		try {
+			className = Class.forName("java.util.Scanner");
+			Constructor [] annot = className.getConstructors();			
+			for(Constructor data : annot)
+				System.out.println(data.getName());
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		try (Scanner sc = new Scanner(System.in)){
+//			System.out.println("Enter Classs name : ");
+//			String className = sc.nextLine();
+//			
+//			Class<?> fetchclass = Class.forName("NewDemo");
+//			
+//			Annotation[] annot = fetchclass.getAnnotations();
+//			
+//			for(Annotation ob : annot)
+//				System.out.println(ob.toString());
+//			System.out.println("exit");
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
+		
+		
+
+	}
+
+}

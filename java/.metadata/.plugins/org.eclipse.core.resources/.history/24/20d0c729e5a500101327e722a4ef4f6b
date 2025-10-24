@@ -1,0 +1,29 @@
+package transaction;
+
+import java.time.LocalDate;
+
+public class Transaction {
+
+	
+
+		int txI; 
+		LocalDate txDate;
+		float txAmount;
+		boolean txStatus; 
+		boolean txArrears;
+		public Transaction(int txI, LocalDate txDate, float txAmount, boolean txStatus, boolean txArrears) {
+			super();
+			this.txI = txI;
+			this.txDate = txDate;
+			this.txAmount = txAmount;
+			this.txStatus = txStatus;
+			this.txArrears = txArrears;
+		}
+		
+		
+		
+
+
+	
+
+}

@@ -1,0 +1,8 @@
+package transaction;
+
+@FunctionalInterface
+public interface stringManipulation {
+	
+	public boolean check(int txAmount);
+
+}
